@@ -1,0 +1,132 @@
+/* ====== GLOBAL STYLES ====== */
+body {
+  background: #0b0f29;
+  color: white;
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  overflow: hidden;
+}
+
+/* ====== MAIN CONTAINER ====== */
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 400px;
+  padding: 0 100px;
+  position: relative;
+}
+
+/* ====== EVENT INFO PANEL ====== */
+.info-panel {
+  max-width: 500px;
+}
+
+.event-card {
+  background: #1c1f3b;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.event-metrics {
+  background: #1f2345;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.metrics-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.metric {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.metric-label {
+  font-size: 0.85em;
+  color: #ccc;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  background: #4a4aff;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn.register {
+  background: #ff5c5c;
+}
+
+/* ====== ORBIT & WHEEL STYLES ====== */
+.orbit-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  overflow: visible;
+}
+
+/* glowing orb */
+.orbit-container::before {
+  content: "";
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #575ab4 50%, transparent 60%);
+  filter: blur(100px);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+
+/* dashed arc (semi-circle) */
+.orbit-arc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* rotating items container */
+.wheel {
+  width: 400px;
+  height: 400px;
+  z-index: 2;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* each rotating label */
+.wheel-item {
+  position: absolute;
+  transform-origin: center;
+  color: #888;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* keeps label upright even as wheel rotates */
+.wheel-item span {
+  display: inline-block;
+  transform: rotate(0deg);
+}
+
+/* active label */
+.wheel-item.active {
+  color: white;
+  font-size: 1.2rem;
+}

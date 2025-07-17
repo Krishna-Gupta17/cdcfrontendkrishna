@@ -1,0 +1,396 @@
+.members-root {
+
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Mina', Arial, sans-serif;
+  padding-bottom: 40px;
+}
+
+.members-header-section {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  align-items: stretch;
+}
+
+.faculty-card {
+  margin-right: 10px;
+}
+
+.welcome-card {
+  margin-left: 10px;
+}
+
+.vertical-line {
+  width: 2px;
+  background: linear-gradient(to bottom, #bdbdbd 10%, #7a7bbd 90%);
+  min-height: 420px;
+  align-self: stretch;
+  border-radius: 1px;
+  margin: 0;
+}
+
+.faculty-card, .welcome-card {
+  border-radius: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  padding: 28px 24px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.15);
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.9s ease-in-out, box-shadow 0.9s ease-in-out;
+}
+
+.faculty-card:hover, .welcome-card:hover {
+  transform: scale(1.09);
+  box-shadow: 0 0 32px 0 #7a7bbd, 0 4px 24px 0 rgba(0,0,0,0.18);
+  z-index: 2;
+}
+
+.hover-reveal {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.9s ease-in-out, max-height 0.9s ease-in-out;
+  overflow: hidden;
+}
+
+.faculty-card:hover .hover-reveal,
+.welcome-card:hover .hover-reveal {
+  opacity: 1;
+  max-height: 800px;
+}
+
+@media (max-width: 600px) {
+  .faculty-card:hover .hover-reveal,
+  .welcome-card:hover .hover-reveal {
+    max-height: 1200px; 
+  }
+}
+
+.faculty-photo-img {
+  width: 370px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  align-self: center;
+}
+
+.faculty-info h2, .faculty-info p {
+  text-align: center;
+  width: 100%;
+}
+
+.faculty-info h2 {
+  margin-bottom: 10px;
+}
+
+.faculty-info p {
+  margin-bottom: 16px;
+}
+
+.faculty-icons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.faculty-icon-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  vertical-align: middle;
+
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  margin: 0;
+  transition: transform 0.2s;
+}
+
+.faculty-icon-img:hover {
+  transform: scale(1.1);
+}
+
+.welcome-card {
+  width: 700px;
+  align-items: center;
+}
+
+.group-photo-placeholder {
+  width: 320px;
+  height: 140px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.welcome-card h2 {
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.welcome-desc {
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.welcome-card .welcome-desc {
+  font-weight: 600;
+}
+
+.batch-section {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 110px;
+}
+
+.batch-tabs-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  margin-bottom: 18px;
+  margin-left: 30px;
+}
+
+.batch-label {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-right: 12px;
+}
+
+.batch-tabs {
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+}
+
+.batch-tab {
+  color: #bdbdbd;
+  cursor: pointer;
+  transition: color 0.2s;
+  position: relative;
+  font-size: 1.7rem;
+  font-weight: 700;
+  padding: 0 8px 0 8px;
+}
+
+.batch-tab.active {
+  color: #4f5fff;
+  border-bottom: 5px solid #4f5fff;
+  padding-bottom: 2px;
+  background: none;
+}
+
+.batch-tab.last {
+  border: 2px solid #4f5fff;
+  border-radius: 2px;
+  color: #bdbdbd;
+  background: rgba(0,0,0,0.3);
+  padding: 2px 16px;
+  margin-left: 8px;
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px; 
+  padding: 0 16px 0 16px;
+  justify-items: space-around;
+}
+
+.member-card {
+  height: 390px;
+  width: 210px;
+  background: transparent;
+  border:#fff;
+  border-style: solid;
+  border-radius: 9px;
+  border-width: 1.5px;
+  padding: 17px 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+}
+
+.member-photo-placeholder {
+  width: 115px;
+  height: 115px;
+}
+
+.member-name {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+.member-role {
+  font-size: 12px;
+  color: grey;
+}
+
+@media (max-width: 1100px) {
+  .members-header-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .vertical-line {
+    display: none;
+  }
+  .members-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding: 0 8px 0 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 4px 0 4px;
+  }
+  .batch-section {
+    padding: 0 4px;
+  }
+  .member-card {
+    width: 90vw;
+    max-width: 340px;
+    height: 370px;
+  }
+  .member-photo-img {
+    width: 90vw;
+    max-width: 180px;
+    height: 175px;
+    bottom: 0;
+  }
+  .batch-label {
+    font-size: 2rem;
+  }
+  .batch-tabs-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 2vw;
+    justify-items: center;
+  }
+  .welcome-card {
+    width: 98vw;
+    max-width: 340px;
+    padding: 10px 6px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .welcome-card h2, .welcome-desc {
+    word-break: break-word;
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .welcome-card img, .groupphoto {
+    max-width: 90vw;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+  }
+  .member-card {
+    width: 95vw;
+    max-width: 160px;
+    height: 250px;
+    margin: 0 auto;
+    padding: 10px 0 8px 0;
+    box-sizing: border-box;
+  }
+  .member-photo-img {
+    width: 100%;
+    max-width: 90px;
+    height: 90px;
+    margin: 0 auto 8px auto;
+    margin-bottom: 2px;
+    bottom: 0;
+  }
+  .faculty-icons {
+    margin-top: 8px;
+    margin-bottom: 2px;
+    gap: 8px;
+  }
+  .faculty-icon-img {
+    width: 26px;
+    height: 26px;
+    padding: 2px;
+  }
+  .batch-label {
+    font-size: 1.1rem;
+  }
+  .batch-tabs {
+    gap: 6px;
+  }
+  .batch-section {
+    padding: 0 2vw;
+  }
+}
+
+.horizontal-line {
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(to right, #bdbdbd 10%, #7a7bbd 90%);
+  margin: 0 auto 32px auto;
+  border-radius: 1px;
+}
+
+.member-photo-img {
+  width: 210px;
+  height: 270px;
+  object-fit: cover;
+  margin-bottom: 12px;
+ position: relative;
+ bottom: 15px;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+@media (max-width: 600px) {
+  .member-photo-img {
+ bottom: 8px;
+}
+}
+
+.card-social {
+  transform: translateY(100%);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.member-card:hover .card-social {
+  transform: translateY(0%);
+  opacity: 1;
+}
+

@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mina:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'Coolvetica';
+  src: url('./assets/fonts/coolvetica.woff2') format('woff2');
+       /* url('./assets//fonts/coolvetica.woff2') format('woff')*/;
+  font-weight: light;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Mina-Regular';
+  src: url('./assets/fonts/Mina/Mina-Regular.ttf') format('truetype');
+       /* url('./assets//fonts/coolvetica.woff2') format('woff')*/;
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Mina-Bold';
+  src: url('./assets/fonts/Mina/Mina-Bold.ttf') format('truetype');
+       /* url('./assets//fonts/coolvetica.woff2') format('woff')*/;
+  font-weight: bold;
+  font-style: normal;
+}
+
+@keyframes verticalLoop {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes horizontalLoop {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-verticalLoop {
+  animation: verticalLoop 15s linear infinite;
+}
+.animate-horizontalLoop {
+  animation: horizontalLoop 15s linear infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+      margin: 0;
+     background: linear-gradient(
+  45deg,
+  rgba(13, 9, 53, 0.2) 0%,
+  rgba(0, 0, 0, 0.2) 25%,
+  rgba(13, 9, 53, 0.2) 50%,
+  rgba(0, 0, 0, 0.2) 75%,
+  rgba(13, 9, 53, 0.2) 100%
+),
+       linear-gradient(
+        135deg,
+        #000000 0%,
+        #0D0935 25%,
+        #000000 50%,
+        #0D0935 75%,
+        #000000 100%
+      );
+
+    }
