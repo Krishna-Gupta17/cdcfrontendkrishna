@@ -30,7 +30,8 @@ const Navbar = () => {
 
 
     return (
-        <nav className="w-full font-inter text-white top-0 z-55">
+        <nav className="w-full font-inter text-white sticky top-0 z-[1000] backdrop-blur-xl bg-transparent">
+
             <div className="hidden md:flex items-center justify-between py-0 m-0 h-[32%]">
                 <div className="flex space-x-[1.8vw] w-[18%]">
                     <div className=" flex flex-col justify-between w-[32%]">
