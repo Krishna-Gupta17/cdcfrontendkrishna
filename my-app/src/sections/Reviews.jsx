@@ -96,29 +96,29 @@ const Review=()=>{
             <div>
                 <h2 className="text-white text-center font-inter font-bold text-3xl sm:text-4xl custom-md2:text-5xl custom-md3:text-6xl mt-14">Join Our Community</h2>
                 <div className=" grid grid-cols-4 gap-10% m-[4%] justify-items-center hidden sm:grid">
-                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[170px] rounded-xl m-4 h-[120px] custom-md3:h-[176px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
+                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[155px] rounded-xl m-4 h-[120px] custom-md3:h-[161px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
                         <a href="https://www.instagram.com/cdc.mmmut/" target=" ">
-                        <img src={insta} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[89px] custom-md3:h-[89px]"/>
+                        <img src={insta} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[85px] custom-md3:h-[85px]"/>
                         </a>
-                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-4xl text-white mt-2">1.2K+</h4>
+                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-3xl text-white mt-2">1.2K+</h4>
                     </div>
-                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[170px] rounded-xl m-4 h-[120px] custom-md3:h-[176px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
+                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[155px] rounded-xl m-4 h-[120px] custom-md3:h-[161px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
                         <a href="https://www.linkedin.com/company/codechef-mmmut-chapter/" target=" ">
-                        <img src={linkedin} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[89px] custom-md3:h-[89px]"/>
+                        <img src={linkedin} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[85px] custom-md3:h-[85px]"/>
                         </a>
-                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-4xl text-white mt-2">2K+</h4>
+                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-3xl text-white mt-2">2K+</h4>
                     </div>
-                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[170px] rounded-xl m-4 h-[120px] custom-md3:h-[176px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
+                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[155px] rounded-xl m-4 h-[120px] custom-md3:h-[161px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
                         <a href="https://t.me/+q7L9GAuUxoNiMjZl" target=" ">
-                        <img src={tele} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[89px] custom-md3:h-[89px]"/>
+                        <img src={tele} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[85px] custom-md3:h-[85px]"/>
                         </a>
-                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-4xl text-white mt-2">1.1K+</h4>
+                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-3xl text-white mt-2">1.1K+</h4>
                     </div>
-                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[170px] rounded-xl m-4 h-[120px] custom-md3:h-[176px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
+                    <div className="bg-[#1A1B3A] shadow-[0_0_20px_8px_rgba(92,97,242,0.3)] w-[120px] custom-md3:w-[155px] rounded-xl m-4 h-[120px] custom-md3:h-[161px] transition-all duration-300 hover:scale-110 hover:[border-top-right-radius:40px] hover:[border-bottom-left-radius:40px] hover:shadow-lg grid justify-items-center">
                         <a href="http://www.youtube.com/@cdcmmmut" target=" ">
-                        <img src={youtube} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[89px] custom-md3:h-[89px]"/>
+                        <img src={youtube} alt="" className="mt-4 custom-md3:mt-6 ml-6 mr-6 w-[60px] h-[60px] custom-md3:w-[85px] custom-md3:h-[85px]"/>
                         </a>
-                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-4xl text-white mt-2">300+</h4>
+                        <h4 className="text-center font-inter font-bold text-3xl custom-md3:text-3xl text-white mt-2">300+</h4>
                     </div>
                 </div>
                 <div className=" grid grid-cols-2 m-[2%] justify-items-center sm:hidden">
