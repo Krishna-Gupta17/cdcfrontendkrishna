@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Eventregimage from "../assets/EventRegisteration/eventreg.png";
+import API from '../api';
+import {auth} from '../firebase'
 
 const initialMember = {
   name: '',
@@ -30,21 +32,20 @@ export default function EventRegistrationPage() {
     }
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) throw new Error('Network response was not ok');
-      alert('Registration successful!');
-    } catch (err) {
-      console.error(err);
-      alert('Something went wrong.');
-    }
-  };
+ const handleSubmit = async e => {
+  e.preventDefault();
+  try {const user = auth.currentUser;
+const token = await user.getIdToken();
+const res=await API.post('/api/register', formData, {
+  headers: { Authorization: `Bearer ${token}` }
+});
+  if (!res.data.success) throw new Error('Registration failed');
+    alert('Registration successful!');
+  } catch (err) {
+    console.error(err);
+    alert('Something went wrong.');
+  }
+};
 
   return (
     <div className="flex flex-col justify-between bg-gradient-to-br from-gray-900 to-black text-white min-h-screen">
