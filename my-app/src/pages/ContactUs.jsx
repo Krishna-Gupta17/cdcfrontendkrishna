@@ -177,7 +177,7 @@ const ContactUs = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              type="number"
+              type="tel"
               placeholder=""
               className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
             />
