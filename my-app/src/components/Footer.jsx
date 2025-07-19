@@ -19,10 +19,10 @@ const Footer = () =>{
                             <img src={logo} alt="" className="w-[34px] custom-md3:w-[42px]" />
                         </div>
                         <div>
-                            <div className="space-y-2">
-                                <h1 className="text-[24px] custom-md3:text-[33px] font-inter font-bold leading-[1.2]">CODERS AND <br/>
+                            <div className="space-y-3">
+                                <h1 className="text-[24px] custom-md3:text-[26px] font-inter font-bold leading-[1.2]">CODERS AND <br/>
                                     DEVELOPERS CLUB</h1>
-                                <p className="font-inter font-semibold text-[18px] custom-md3:text-[22px] leading-[1.2]">Madan Mohan Malaviya University of<br />
+                                <p className="font-inter font-semibold text-[18px] custom-md3:text-[16px] leading-[1.2]">Madan Mohan Malaviya University of<br />
                                     Technology,<br />
                                     Gorakhpur, Uttar Pradesh
                                 </p>
@@ -33,7 +33,7 @@ const Footer = () =>{
                 <div className="w-px h-25 bg-gray-500" />
                 <div className="flex justify-center w-full md:w-[40%] custom-md3:w-[35%] ">
                     <div className="-mt-5 w-full">
-                        <h3 className="font-inter text-[16px] custom-md3:text-[20px] font-bold mb-[6%] text-center ">NAVIGATION</h3>
+                        <h3 className="font-inter text-[16px] custom-md3:text-[18px] font-bold mb-[6%] text-center ">NAVIGATION</h3>
                         <div className="w-full">
                             <ul className=" text-base font-inter justify-items-center">
                                 <div className="space-y-8 w-full">
@@ -73,7 +73,7 @@ const Footer = () =>{
                 <div className="w-px h-25 bg-gray-500" />
                 <div className="w-full md:w-[22%] custom-md3:w-[27%] flex justify-center">
                 <div className="-mt-5 ">
-                    <h3 className="font-inter text-[16px] custom-md3:text-[20px] font-bold mb-[28%] text-center ">REACH US</h3>
+                    <h3 className="font-inter text-[16px] custom-md3:text-[18px] font-bold mb-[28%] text-center ">REACH US</h3>
                     <div className="grid grid-cols-2 gap-[40%]">
                         <div className="w-[40px]">
                             <a href="https://www.linkedin.com/company/codechef-mmmut-chapter/" target=" ">
