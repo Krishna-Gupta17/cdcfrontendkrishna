@@ -64,6 +64,7 @@ const Review=()=>{
     }, []);
 
     const visibleReviews = reviews.slice(groupIndex * 3, groupIndex * 3 + 3);
+    const mobilevisibleReviews = reviews.slice(groupIndex * 1, groupIndex * 1 + 1);
 
     return(
         <div className="relative bg-transparent w-full h-auto">
@@ -71,7 +72,7 @@ const Review=()=>{
             </h2>
             
             <div
-                className={`grid custom-md2:grid-cols-3 justify-items-center gap-6 my-7 mx-14 transition-opacity duration-[1500ms] ease-in-out ${fade ? "opacity-100" : "opacity-0"}`}
+                className={`hidden custom-md2:grid grid-cols-3 justify-items-center gap-6 my-7 mx-14 transition-opacity duration-[1500ms] ease-in-out ${fade ? "opacity-100" : "opacity-0"}`}
             >
                 {visibleReviews.map((review, index) => (
                     <ReviewCard
@@ -84,13 +85,16 @@ const Review=()=>{
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 sm:hidden justify-items-center gap-6 m-7">
-                <ReviewCard
-                    name={reviews[0].name}
-                    batch={reviews[0].batch}
-                    description={reviews[0].description}
-                    image={reviews[0].image}
-                />
+            <div className=" custom-md2:hidden justify-items-center gap-6 m-7">
+                {mobilevisibleReviews.map((review, index) => (
+                    <ReviewCard
+                        key={index}
+                        name={review.name}
+                        batch={review.batch}
+                        description={review.description}
+                        image={review.image}
+                    />
+                ))}
             </div>
 
             <div>
