@@ -63,6 +63,7 @@ export default function AboutUs() {
         onMouseLeave={handleMouseLeave}
         className="
           w-full max-w-7xl
+          custom-md4:h-[80vh]
           h-[67vh]
           rounded-3xl
           bg-transparent
