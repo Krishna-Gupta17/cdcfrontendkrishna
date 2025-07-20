@@ -8,6 +8,9 @@ export default {
     extend: {
        screens: {
         'custom-lg': '1080px', 
+        'custom-lg1': '1236px', 
+        'custom-lg2':'1375px',
+        'custom-lg3':'1140px',
         'custom-md' : '980px',
         'custom-md1': '1182px',
         'custom-md2': '900px',

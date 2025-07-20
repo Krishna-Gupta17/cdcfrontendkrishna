@@ -58,6 +58,8 @@ html {
 
 body {
       margin: 0;
+      overflow-x:hidden ;
+      overflow-y:auto;
      background: linear-gradient(
   45deg,
   rgba(13, 9, 53, 0.2) 0%,

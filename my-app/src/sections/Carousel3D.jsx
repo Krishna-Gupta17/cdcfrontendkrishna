@@ -108,7 +108,7 @@ const Carousel3D = () => {
   }, [currentIndex, zDepth]);
 
   return (
-    <div className="scene mb-[8vw]" ref={sceneRef} >
+    <div className="scene mb-[8vw] w-[98vw]" ref={sceneRef} >
       <div className="relative bg-transparent w-full h-auto mb-[4vw] custom-md2:mb-[5vw] custom-md3:mb-[7vw]">
             <h2 className="text-white text-center font-inter font-bold text-3xl sm:text-4xl custom-md2:text-5xl custom-md3:text-6xl">Glimpses of CDC </h2>
       </div>

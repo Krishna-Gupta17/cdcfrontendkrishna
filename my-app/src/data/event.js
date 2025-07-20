@@ -3,7 +3,7 @@ const eventData = [
     title: "GOC",
     short: "GOC",
     image: "/goc.png",
-    description: "Game of Codes is an exclusive event for second-year students. It aims to foster programming skills and innovation among participants. The event promises engaging activities tailored for budding coders.",
+    description: "Game of Codes is an exclusive event designed for second-year students. It aims to foster programming skills, creativity and innovation through exciting challenges, offering engaging activities tailored specifically for passionate and budding coders.",
     card: {
       title: "GOC 2025",
       stats: { workshops: 350, participants: 200 }
@@ -23,7 +23,7 @@ const eventData = [
     title: "Algo Olympics",
     short: "Algo olympics",
     image: "/algolympics.png",
-    description: "AlgOlympics is a regional-level coding competition to foster collaboration, competitiveness, and technical excellence. Following the ICPC structure, the event is open to participants from institutions throughout the region.",
+    description: "AlgOlympics is a regional-level coding competition that fosters collaboration, competitiveness and technical excellence. Inspired by the ICPC format, it invites students to showcase their algorithmic thinking and problem-solving skills.",
     card: {
       title: "Algo Olympics 2025",
       stats: { workshops: 350, participants: 200 }
@@ -33,7 +33,7 @@ const eventData = [
     short: "Code Cascade", 
     name: "Code Cascade 2025",
     image: "/codeCascade.png",
-    description: "The three-day Code Cascade event offers online coding classes for juniors, focusing on programming basics in a supportive environment. The event aims to build coding skills and inspire a passion for technology.",
+    description: "Code Cascade is a three-day event featuring online coding classes for juniors. It focuses on teaching programming fundamentals in a supportive environment, aiming to develop coding skills and ignite a lasting passion for technology and innovation.",
     stats: { workshops: 350, participants: 200 },
   },
 ];
