@@ -63,7 +63,7 @@ export default function AboutUs() {
         onMouseLeave={handleMouseLeave}
         className="
           w-full max-w-7xl
-          h-[80vh]
+          h-[67vh]
           rounded-3xl
           bg-transparent
           backdrop-blur-2xl
@@ -74,6 +74,7 @@ export default function AboutUs() {
           flex flex-col custom-md1:flex-row gap-10
           will-change-transform
           overflow-hidden
+          mt-20
         "
         style={{ transformStyle: "preserve-3d" }}
       >
@@ -87,7 +88,7 @@ export default function AboutUs() {
             teamwork, and technical excellence.
           </p>
         </div>
-        <div className="custom-md4:hidden flex-1 px-4 text-white">
+        <div className="custom-md4:hidden flex-1 px-4 pt-4 text-white">
           <h2 className="text-2xl sm:text-3xl text-center font-bold mb-3">About Us</h2>
           <p className="text-sm sm:text-base text-justify text-white/90 leading-snug" style={{ fontFamily: 'Coolvetica' }}>
             The Coders & Developers Club MMMUT fosters a strong coding culture by empowering students
@@ -97,8 +98,6 @@ export default function AboutUs() {
           </p>
         </div>
 
-
-        {/* Right Side: Continuous Scroll */}
         <div className="flex-1 overflow-hidden h-[100%]  mt-0 relative">
           <div className="hidden custom-md4:block absolute top-0 left-0 w-full animate-verticalLoop ">
             {loopedFeatures.map((item, idx) => (
