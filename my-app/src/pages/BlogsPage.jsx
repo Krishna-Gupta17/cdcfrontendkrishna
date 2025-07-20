@@ -13,7 +13,7 @@ const Blog = () => {
     description: '',
   });
   useEffect(() => {
-    axios.get(`http://127.0.0.1:4200/members/blog/${id}`)
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/members/blog/${id}`)
       .then(res => setBlogData(res.data.data))
       .catch(err => console.error(err));
   }, [id]);
