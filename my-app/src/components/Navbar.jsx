@@ -14,6 +14,8 @@ import { useState, useEffect } from "react";
 
 const Navbar = () => {
 
+    const [isMobileMenuOpen, setIsMobileMenuOpen]=useState(false);
+
     const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
@@ -31,7 +33,6 @@ const Navbar = () => {
 
     return (
         <nav className="w-full font-inter text-white sticky top-0 z-[1000] backdrop-blur-xl bg-transparent">
-
             <div className="hidden md:flex items-center justify-between py-0 m-0 h-[32%]">
                 <div className="flex space-x-[1.8vw] w-[18%]">
                     <div className=" flex flex-col justify-between w-[32%]">
@@ -75,11 +76,47 @@ const Navbar = () => {
                 <div className="text-xl sm:text-2xl custom-md:text-5xl font-bold text-center">
                     Coders & Developers Club
                 </div>
-                <div className="cursor-pointer">
-                    <img src={menu} alt="menu" className="h-4 sm:h-6 custom-md:h-8" />
+                <div className="cursor-pointer" onClick={()=>setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                    <div className="relative w-6 h-6 cursor-pointer z-[10000]" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                        <span
+                            className={`block absolute h-0.5 w-full bg-white transform transition duration-300 ease-in-out ${isMobileMenuOpen ? 'rotate-45 top-2.5' : 'top-1'
+                                }`}
+                        />
+                        <span
+                            className={`block absolute h-0.5 w-full bg-white transform transition duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0' : 'top-2.5'
+                                }`}
+                        />
+                        <span
+                            className={`block absolute h-0.5 w-full bg-white transform transition duration-300 ease-in-out ${isMobileMenuOpen ? '-rotate-45 top-2.5' : 'top-4'
+                                }`}
+                        />
+                    </div>
                 </div>
             </div>
-
+            <div
+                className={`fixed top-0 right-0 h-full w-[60%] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                    }`}
+            >
+                <div className="flex justify-end p-4">
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-white text-2xl font-bold"
+                    >
+                    </button>
+                </div>
+                <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold">
+                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Home</Link>
+                    <Link to="/#events" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Events</Link>
+                    <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Resources</Link>
+                    <Link to="/teams" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Teams</Link>
+                    <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Contact</Link>
+                    {!currentUser ? (
+                        <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Login</Link>
+                    ) : (
+                        <Link to="/profile" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Profile</Link>
+                    )}
+                </nav>
+            </div>
         </nav>
     )
 }
