@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import contactImg from "../assets/highResol.jpg";
+import contactImg from "../assets/Rectangle.png";
 import phoneIcon from "../assets/phoneIcon.png";
 import mailIcon from "../assets/mailIcon.png";
 import { useState } from "react";
@@ -64,7 +64,7 @@ const ContactUs = () => {
             className="w-full h-full object-cover mr-10 py-[0vw]"
           />
 
-          <div className="absolute inset-0 bg-black bg-opacity-60 rounded-xl p-6 flex flex-col justify-start items-start">
+          <div className="absolute inset-0 bg-black bg-opacity-0 rounded-xl p-6 flex flex-col justify-start items-start">
             <h2 className="text-6xl font-bold font-inter mb-4 text-white">
               Contact Us
             </h2>
