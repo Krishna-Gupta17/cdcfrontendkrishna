@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import Aim from "../assets/aboutus/Aim.png";
 import Mission from "../assets/aboutus/Mission.png";
 import Vision from "../assets/aboutus/Vision.png";
+import MatrixRain from "../components/MatrixRain";
+
 const features = [
   {
     title: "AIM",
@@ -51,7 +53,7 @@ export default function AboutUs() {
     setTimeout(() => {
       card.style.transition = "";
     }, 500);
-  };c
+  };
 
   const loopedFeatures = [...features, ...features];
 
@@ -79,7 +81,7 @@ export default function AboutUs() {
         "
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Left Side */}
+        <MatrixRain/>
         <div className="hidden custom-md4:block flex-1 mt-24 mr-4 text-white">
           <h2 className="text-[4.05vw] text-center font-bold mb-3">About Us</h2>
           <p className="text-[1.62vw] text-justify text-white/90 leading-tight" style={{fontFamily:'Coolvetica'}}>
