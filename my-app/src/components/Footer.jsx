@@ -11,7 +11,7 @@ import youtube from "../assets/socialmedia/youtube.png";
 import linkedin from "../assets/socialmedia/linkedin.png";
 const Footer = () =>{
     return(
-        <footer className= "text-white px-6 py-12 flex  justify-between items-start gap-10 bg-gradient-to-r from-[#0D0D2B] to-[#14143D]">
+        <footer className= "text-white px-6 py-12 flex  justify-between items-start gap-10 bg-gradient-to-r from-[#0D0D2B] to-[#14143D] bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]">
             <div className="hidden md:flex flex-row w-full"> 
                 <div className="flex w-full md:w-[40%] gap-[30%]">
                     <div className="flex space-x-3 -mt-5">
@@ -39,13 +39,13 @@ const Footer = () =>{
                                 <div className="space-y-8 w-full">
                                     <div className="flex justify-center gap-[17%]">
                                         <Link to="/">
-                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-125">
+                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:text-cyan-400 ease-in-out">
                                             <img src={home} alt="home" className="w-[24px] custom-md3:w-[33px]"/>
                                             HOME 
                                         </li>
                                         </Link>
                                         <Link to="/team">
-                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-125">
+                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:text-cyan-400 ease-in-out">
                                             <img src={members} alt="members" className="w-[24px] custom-md3:w-[33px]"/>
                                             MEMBERS
                                         </li>
@@ -53,13 +53,13 @@ const Footer = () =>{
                                     </div>
                                     <div className="flex justify-center gap-[17%]">
                                         <Link to="/event">
-                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-125"> 
+                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:text-cyan-400 ease-in-out"> 
                                             <img src={event} alt="events" className="w-[24px] custom-md3:w-[33px]"/>
                                             EVENT
                                         </li>
                                         </Link>
                                         <Link to="/contact">
-                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-125">
+                                        <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:text-cyan-400 ease-in-out">
                                             <img src={contact} alt="contact" className="w-[24px] custom-md3:w-[33px]"/>
                                             CONTACT
                                         </li>

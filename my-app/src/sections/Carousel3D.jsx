@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/Carousel3D.css';
-
 import Glimpse1 from "../assets/glimpses/Glimpse1.png";
 import Glimpse2 from "../assets/glimpses/Glimpse2.png";
 import Glimpse3 from "../assets/glimpses/Glimpse3.png";
@@ -44,8 +43,6 @@ const Carousel3D = () => {
     setCurrentIndex((prevIndex) => (prevIndex + direction + total) % total);
   };
 
-
-  // Hijack scroll to rotate carousel
   useEffect(() => {
     const handleWheel = (e) => {
       e.preventDefault();
@@ -70,7 +67,6 @@ const Carousel3D = () => {
     };
   }, []);
 
-  // Responsive Z-depth
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -84,7 +80,6 @@ const Carousel3D = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Rotation transform
   useEffect(() => {
     const carouselItems = document.querySelectorAll('.carousel-item');
     carouselItems.forEach((item, i) => {
@@ -116,9 +111,6 @@ const Carousel3D = () => {
         {images.map((src, index) => (
           <div key={index} className="carousel-item">
             <img src={src} alt={`Glimpse ${index + 1}`} />
-            <div className="carousel-text">
-              <button>VIEW CASE</button>
-            </div>
           </div>
         ))}
       </div>
