@@ -16,6 +16,7 @@ export default {
         'custom-md2': '900px',
         'custom-md3': '1222px',
         'custom-md4': '1182px',
+        'custom-mdnavbar' : '1024px',
         // Add custom breakpoint
       },
       fontFamily: {

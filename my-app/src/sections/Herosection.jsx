@@ -9,7 +9,7 @@ const Herosection = () => {
     <div className='relative overflow-visible'>
      <img src={heroarrow} alt="arrow" className='hidden sm:block absolute top-[2%] left-[4%] w-[11vw] '/>
      <img src={roundarrow} alt="arrow" className='hidden sm:block absolute top-[80%] right-[12%] w-[8vw]' />
-    <div className='flex flex-col items-center mt-[5%]'>
+    <div className='flex flex-col items-center mt-[3%]'>
         <div className='flex items-center w-full justify-center'>
             <img src={leftbracket} alt="squarebrsacket" className='hidden sm:block sm:w-[2vw]'/>
             <p className='flex justify-center text-[#6568ff] text-[22px] sm:text-[3.83vw] w-[100vw] sm:w-[67.5%] font-extrabold font-inter'>CODERS & DEVELOPERS CLUB</p>
