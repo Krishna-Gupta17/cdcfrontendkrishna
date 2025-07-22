@@ -51,7 +51,7 @@ export default function AboutUs() {
     setTimeout(() => {
       card.style.transition = "";
     }, 500);
-  };
+  };c
 
   const loopedFeatures = [...features, ...features];
 
