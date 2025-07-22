@@ -1,8 +1,7 @@
 import React from "react";
 import eventDes from "../../data/eventDes";
 
-const EventCard = () => {
-  const event = eventDes[0]; // just grab the first one
+const EventCard = ({event}) => {
 
   return (
     <div className="flex font-inter font-medium text-white mt-6 ml-14 mr-14 rounded-2xl h-96">

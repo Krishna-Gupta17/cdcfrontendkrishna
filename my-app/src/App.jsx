@@ -13,7 +13,7 @@ import RoadmapPage from "./pages/RoadmapPage.jsx";
 import Members from "./pages/Members.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
 import EventRegisteration from "./pages/EventRegisteration.jsx";
-import EventPage from "./pages/EventsPage.jsx";
+import EventsPage from "./pages/EventsPage.jsx";
 import AdminPage from "./pages/adminpage.jsx";
 import TeamPage from "./pages/TeamPage.jsx"
 import MembersList from "./components/memberPage/MembersList.jsx";
@@ -28,7 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
          <Route path="/admin" element={<AdminPage />} />
-        <Route path="/event" element={<EventPage />} />
+        <Route path="/event" element={<EventsPage />} />
         <Route path="/resources" element={<ResourcePage />} />
         <Route path="/team" element={<Members />} />
         <Route path="/members/:id" element={<MemberProfile />} />
@@ -38,7 +38,7 @@ function App() {
         <Route path="/roadmap/:domainTitle" element={<RoadmapPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<EventRegisteration/>}/>
-        <Route path="/eventpage" element={<EventPage/>}/>
+        <Route path="/eventpage/:eventId" element={<EventsPage/>}/>
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/members/blog/:id" element={<Blog />} />
         <Route path="/teams" element={<TeamPage />}>
