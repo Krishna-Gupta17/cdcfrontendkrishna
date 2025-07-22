@@ -32,21 +32,21 @@ const Navbar = () => {
 
 
     return (
-        <nav className="w-full font-inter text-white sticky top-0 z-[1000] backdrop-blur-xl bg-transparent">
-            <div className="hidden md:flex items-center justify-between py-0 m-0 h-[32%]">
-                <div className="flex space-x-[1.8vw] w-[18%]">
-                    <div className=" flex flex-col justify-between w-[32%]">
+        <nav className="w-full font-inter text-white sticky top-0 z-[1000] backdrop-blur-2xl bg-transparent">
+            <div className="hidden custom-mdnavbar:flex items-center justify-between py-0 m-0 h-[32%]">
+                <div className="flex space-x-[1.6vw] w-[15%]">
+                    <div className=" flex flex-col justify-between w-[36%]">
                         <div className="">
                             <img src={navbarleft} alt="Left" className="w-[90%]" />
                         </div>
                         <div className="h-[4%]"></div>
                     </div>
                     <div className="flex-shrink-0 flex items-center">
-                        <img src={logo} alt="Logo" className="w-[7.3vw]" />
+                        <img src={logo} alt="Logo" className="w-[6.5vw]" />
                     </div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                    <ul class="flex space-x-8 text-[1.65vw] font-bold tracking-wider uppercase">
+                    <ul class="flex space-x-6 text-[16px] custom-md1:text-[19.3232px] custom-lg:text-[17px] font-bold tracking-wider uppercase">
                         <li><Link to="/" class="hover:text-blue-400">Home</Link></li>
                         <li><Link to="/#events" class="hover:text-blue-400">Events</Link></li>
                         <li><Link to="/resources" class="hover:text-blue-400">Resources</Link></li>
@@ -61,19 +61,19 @@ const Navbar = () => {
                        
                     </ul>
                 </div>
-                <div className=" w-[22%] flex justify-end relative h-[100%]">
-                    <img src={navbarright} alt="Left" className="w-[19.8vw] h-[100%]" />
+                <div className=" w-[20%] flex justify-end relative h-[100%]">
+                    <img src={navbarright} alt="Left" className="w-[18vw] h-[100%]" />
                     <div className="absolute top-[40%] right-[35%] flex space-x-[1vw]">
-                        <a href="#" class="hover:text-blue-400"> <img src={github} alt="Left" className="w-[1.6vw]" /></a>
-                        <a href="#" class="hover:text-blue-400"><img src={discord} alt="Left" className="w-[1.6vw]" /></a>
-                        <a href="#" class="hover:text-blue-400"><img src={instagram} alt="Left" className="w-[1.6vw]" /></a>
-                        <a href="#" class="hover:text-blue-400"><img src={twitter} alt="Left" className="w-[1.6vw]" /></a>
+                        <a href="#" class="hover:text-blue-400"> <img src={github} alt="Left" className="w-[1.4vw]" /></a>
+                        <a href="#" class="hover:text-blue-400"><img src={discord} alt="Left" className="w-[1.4vw]" /></a>
+                        <a href="#" class="hover:text-blue-400"><img src={instagram} alt="Left" className="w-[1.4vw]" /></a>
+                        <a href="#" class="hover:text-blue-400"><img src={twitter} alt="Left" className="w-[1.4vw]" /></a>
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center w-full pl-2 pr-3 h-14 md:hidden lg:mt-4 md:mt-2 sm-mt:0">
-                <img src={logo} alt="Logo" className="h-10 md:h-16 lg:h-20" />
-                <div className="text-xl sm:text-2xl custom-md:text-5xl font-bold text-center">
+            <div className="flex justify-between items-center w-full pl-2 pr-3 h-14 custom-mdnavbar:hidden lg:mt-4 md:mt-2 sm-mt:0">
+                <img src={logo} alt="Logo" className="h-10 sm:h-16 lg:h-20" />
+                <div className="text-xl sm:text-3xl font-bold text-center">
                     Coders & Developers Club
                 </div>
                 <div className="cursor-pointer" onClick={()=>setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -94,7 +94,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div
-                className={`fixed top-0 right-0 h-full w-[60%] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-0 right-0 h-full w-[14%] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}
             >
                 <div className="flex justify-end p-4">
@@ -104,7 +104,8 @@ const Navbar = () => {
                     >
                     </button>
                 </div>
-                <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold">
+                <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold h-[50vh]"
+                >
                     <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Home</Link>
                     <Link to="/#events" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Events</Link>
                     <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Resources</Link>

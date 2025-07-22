@@ -206,7 +206,7 @@ const ContactUs = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/30 hover:bg-[#6568ff]/60 text-white font-bold py-2 md:py-3.5 px-4 md:px-0 rounded-lg border-2 border-[#6568ff]/50 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
+              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/30 hover:bg-[#6568ff]/60 text-white font-bold py-6 md:py-3.8 px-4 md:px-0 rounded-lg border-2 border-[#6568ff]/50 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
             >
               Submit
             </button>
