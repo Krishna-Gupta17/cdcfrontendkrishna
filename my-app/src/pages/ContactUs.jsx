@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import contactImg from "../assets/Rectangle.png";
+import contactImg from "../assets/try.png";
 import phoneIcon from "../assets/phoneIcon.png";
 import mailIcon from "../assets/mailIcon.png";
 import { useState } from "react";
@@ -64,7 +64,7 @@ const ContactUs = () => {
             className="w-full h-full object-cover mr-10 py-[0vw]"
           />
 
-          <div className="absolute inset-0 bg-black bg-opacity-0 rounded-xl p-6 flex flex-col justify-start items-start">
+          <div className="absolute inset-0 bg-black bg-opacity-60 rounded-xl p-6 flex flex-col justify-start items-start">
             <h2 className="text-6xl font-bold font-inter mb-4 text-white">
               Contact Us
             </h2>
@@ -123,7 +123,7 @@ const ContactUs = () => {
                 onChange={handleChange}
                 type="text"
                 placeholder=""
-                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
+                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
               />
             </div>
             <div className="flex flex-col w-full">
@@ -140,7 +140,7 @@ const ContactUs = () => {
                 onChange={handleChange}
                 type="text"
                 placeholder=""
-                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
+                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
               />
             </div>
           </div>
@@ -160,7 +160,7 @@ const ContactUs = () => {
               onChange={handleChange}
               type="email"
               placeholder=""
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
+              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
             />
           </div>
 
@@ -179,7 +179,7 @@ const ContactUs = () => {
               onChange={handleChange}
               type="tel"
               placeholder=""
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
+              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
             />
           </div>
 
@@ -198,7 +198,7 @@ const ContactUs = () => {
               onChange={handleChange}
               rows="5"
               placeholder=""
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium"
+              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] bg-opacity-20 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
             ></textarea>
           </div>
 
@@ -206,7 +206,7 @@ const ContactUs = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/30 hover:bg-[#6568ff]/60 text-white font-bold py-6 md:py-3.8 px-4 md:px-0 rounded-lg border-2 border-[#6568ff]/50 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
+              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/30 hover:bg-[#6568ff]/60 text-white font-bold py-6 md:py-3.8 px-4 md:px-0 rounded-lg border-2 border-slate-400 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
             >
               Submit
             </button>
