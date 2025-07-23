@@ -12,7 +12,7 @@ export default function MembersList({ year: defaultYear }) {
     const [members, setMembers] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:4200/members?year=${finalYear}`)
+        axios.get(`${import.meta.env.VITE_SERVER_URL}/members?year=${finalYear}`)
             .then((res) => setMembers(res.data.body))
             .catch((err) => console.error('Error loading members:', err));
     }, [finalYear]);

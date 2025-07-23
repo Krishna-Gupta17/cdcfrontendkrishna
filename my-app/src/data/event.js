@@ -1,5 +1,6 @@
 const eventData = [
   {
+    id: "goc",
     title: "GOC",
     short: "GOC",
     image: "/goc.png",
@@ -10,6 +11,7 @@ const eventData = [
     }
   },
   {
+    id: "syntax-siege",
     title: "Syntax Siege",
     short: "Syntax siege",
     image: "/syntaxSeige.png",
@@ -20,8 +22,9 @@ const eventData = [
     }
   },
   {
-    title: "Algo Olympics",
-    short: "Algo olympics",
+    id: "algolympics",
+    title: "AlgOlympics",
+    short: "AlgOlympics",
     image: "/algolympics.png",
     description: "AlgOlympics is a regional-level coding competition that fosters collaboration, competitiveness and technical excellence. Inspired by the ICPC format, it invites students to showcase their algorithmic thinking and problem-solving skills.",
     card: {
@@ -30,6 +33,7 @@ const eventData = [
     }
   },
   {
+    id: "code-cascade",
     short: "Code Cascade", 
     name: "Code Cascade 2025",
     image: "/codeCascade.png",

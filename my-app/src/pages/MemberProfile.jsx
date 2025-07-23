@@ -30,7 +30,7 @@ const MemberProfile = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:4200/members/${id}`)
+    axios.get(`${import.meta.env.VITE_SERVER_URL}/members/${id}`)
       .then((res) => {
         const data = res.data.body;
         setMember(data);

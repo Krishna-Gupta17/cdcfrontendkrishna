@@ -21,7 +21,7 @@ const EventDetails = ({ event }) => {
               />
               <div className="flex flex-col gap-3.5 mt-[8%] custom-lg2:mt-[5%] w-[192px]">
                 <div>
-                  <Link to="/eventpage">
+                  <Link to={`/eventpage/${event.id}`}>
                     <button className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-xl font-inter font-bold px-4 py-2  w-[176px] custom-lg1:w-[192px] h-10 rounded-xl transition">
                       Event Details
                     </button>
@@ -92,7 +92,7 @@ const EventDetails = ({ event }) => {
             />
           </div>
           <div className="text-white w-[226px] flex flex-col justify-center items-center">
-            <div className="flex gap-4 items-center jsutify-center">
+            <div className="flex gap-4 items-center justify-center">
                <img src={flag} className="w-8 custom-md2:w-10" />
               <div className="text-lg sm:text-xl custom-md2:text-2xl font-bold">{event.stats?.participants ?? event.card?.stats?.participants ?? 0}+</div>
               </div>
@@ -106,7 +106,7 @@ const EventDetails = ({ event }) => {
         </div>
       <div className="flex flex-col justify-center gap-4 mt-4">
         <div className="flex justify-center">
-                  <Link to="/eventpage">
+                  <Link to={`/eventpage/${event.id}`}>
                     <button className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-sm am:text-lg md:text-xl font-inter font-bold px-4 py-2 w-[124px] sm:w-[160px] md:w-[176px] h-8 md:h-10 rounded-xl transition">
                       Event Details
                     </button>
