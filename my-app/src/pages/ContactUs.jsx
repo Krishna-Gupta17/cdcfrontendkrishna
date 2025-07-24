@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import contactImg from "../assets/try.png";
 import phoneIcon from "../assets/phoneIcon.png";
 import mailIcon from "../assets/mailIcon.png";
-import { useState } from "react";
 import axios from 'axios';
-
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -26,13 +24,12 @@ const ContactUs = () => {
     e.preventDefault();
 
     const { firstName, lastName, email, phone, message } = formData;
-    try{
-
+    try {
       const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/feedback`, {
         firstName,
         lastName,
         phone,
-        email, 
+        email,
         message
       });
       console.log("Feedback submitted:", res.data);
@@ -44,26 +41,26 @@ const ContactUs = () => {
         phone: "",
         message: ""
       });
-    }
-    catch (err) {
+    } catch (err) {
       console.error("Error submitting feedback:", err);
       alert("Failed to submit feedback. Please try again later.");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen">
 
-
       <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10 items-center">
         {/* Left Side */}
-        <div className="relative w-full h-[500px] md:h-auto rounded-xl overflow-hidden">
+        <div className="relative w-full h-[500px] md:h-auto rounded-xl overflow-hidden 
+                        bg-gradient-to-r from-[#3D3E56] to-[#23244A]">
           <img
             src={contactImg}
             alt="Contact Illustration"
-            className="w-full h-full object-cover mr-10 py-[0vw]"
+            className="w-full h-full object-contain mix-blend-overlay"
           />
 
+          {/* Black overlay for readability */}
           <div className="absolute inset-0 bg-black bg-opacity-60 rounded-xl p-6 flex flex-col justify-start items-start">
             <h2 className="text-6xl font-bold font-inter mb-4 text-white">
               Contact Us
@@ -203,7 +200,6 @@ const ContactUs = () => {
             ></textarea>
           </div>
 
-
           <div className="flex justify-center">
             <button
               type="submit"
@@ -212,11 +208,8 @@ const ContactUs = () => {
               Submit
             </button>
           </div>
-
-
         </form>
       </div>
-
 
     </div>
   );

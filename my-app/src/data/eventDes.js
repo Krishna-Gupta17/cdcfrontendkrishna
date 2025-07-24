@@ -58,13 +58,13 @@ const eventDes = [
     image: "/codeCascade.png",
     description: "The three-day Code Cascade event offers online coding classes for juniors, focusing on programming basics in a supportive environment. Participants engage in interactive sessions, exploring key concepts and hands-on activities. The event aims to build coding skills and inspire a passion for technology.",
     schedule: [
-    "9 Jan, 2024"
+    "Online at Teams :- 9 Jan, 2024"
     ],
     venue : [
       "Online :- Teams"
     ],
     registeration: [
-       "Free Registeration"
+         "Free Registeration"
     ]
   },
 ]

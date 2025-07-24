@@ -40,46 +40,50 @@ const Roadmap = ({ mainHeading, subHeading, steps }) => {
 
       {/* Steps */}
       <div className="relative flex flex-col gap-16 max-w-5xl mx-auto">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            className="relative flex flex-col md:flex-row items-start gap-6"
-            initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-          >
-            {/* Step Circle & Connector */}
-            <div className="flex flex-col items-center relative z-10">
-              <div className="w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-blue-600 to-purple-700 border-4 border-blue-300 rounded-full flex items-center justify-center text-white text-xl md:text-2xl font-extrabold shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] transition">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-                {index !== steps.length - 1 && (
-                <div
-                  className="absolute top-full left-1/2 transform-translate-x-1/2 w-1 h-10 md:h-16 bg-white"  //white line joining the blocks 
-                ></div>
-              )}
-            </div>
-            <div className="flex-1 bg-white/10 border border-[#3B3B5B] rounded-xl px-6 py-4 shadow-m  hover:shadow-blue-500/30 hover:scale-105 hover:bg-[#0F0F2A] opacity-90  transform transition duration-500">
-              <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">{step.title}</h2>
-              <ul className="list-disc pl-5 space-y-1 text-white/90">
-                {step.points.map((point, i) => (  // points array
-                  <li key={i}>
-                    <a
-                      href={point.link}
-                      className="hover:text-blue-300 transition"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      >
-                      {point.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        ))}
+  {steps.map((step, index) => (
+    <motion.div
+      key={index}
+      className="relative flex flex-col md:flex-row items-start gap-6"
+      initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.8, delay: index * 0.2 }}
+    >
+      {/* Step Circle & Connector */}
+      <div className="flex flex-col items-center relative z-20">
+        <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-blue-600 to-purple-700 border-4 border-blue-300 rounded-full flex items-center justify-center text-white text-sm md:text-lg font-extrabold shadow-[0_0_10px_rgba(59,130,246,0.4)] hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition">
+        {String(index + 1).padStart(2, "0")}
+         </div>
+          {index !== steps.length - 1 && (
+          <div
+           className="absolute top-full left-1/2 -translate-x-1/2 w-0.5 h-28 md:h-40 bg-white z-10"
+           ></div>
+)}
+
       </div>
+
+      {/* Step Block */}
+      <div className="flex-1 bg-white/10 border border-[#3B3B5B] rounded-xl px-6 py-4 shadow-m hover:shadow-blue-500/30 hover:scale-105 hover:bg-[#0F0F2A] opacity-90 transform transition duration-500 z-30">
+        <h2 className="text-xl md:text-2xl font-bold text-blue-400 mb-2">{step.title}</h2>
+        <ul className="list-disc pl-5 space-y-1 text-white/80 text-xs md:text-sm leading-snug">
+          {step.points.map((point, i) => (
+            <li key={i}>
+              <a
+                href={point.link}
+                className="hover:text-blue-300 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {point.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  ))}
+</div>
+
     </motion.div>
   );
 };

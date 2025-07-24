@@ -73,7 +73,7 @@ const EventsPage = () => {
             </div>
 
             {/* Year */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 bg-white text-black text-xl font-bold rounded-full w-14 h-14 flex items-center justify-center border-4 border-black z-20">
+            <div className="absolute left-1/2 transform-translate-x-1/2 bg-white text-black text-xl font-bold rounded-full w-14 h-14 flex items-center justify-center border-4 border-black z-20">
               {year}
             </div>
 
