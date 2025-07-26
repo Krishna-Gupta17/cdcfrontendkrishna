@@ -103,6 +103,7 @@ const ContactUs = () => {
         </div>
 
         {/* Right Side: Form */}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Grid for First and Last Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 gap-y-4">
@@ -119,7 +120,8 @@ const ContactUs = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 type="text"
-                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
+                placeholder=""
+                className="w-full px-4 py-3 md:py-3.5 bg-gray-800   rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border border-gray-600"
               />
             </div>
             <div className="flex flex-col w-full">
@@ -135,7 +137,8 @@ const ContactUs = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 type="text"
-                className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_22%,_#23244A_74%)] rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
+                placeholder=""
+                className="w-full px-4 py-3 md:py-3.5 bg-gray-800 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium  border border-gray-600"
               />
             </div>
           </div>
@@ -154,7 +157,8 @@ const ContactUs = () => {
               value={formData.email}
               onChange={handleChange}
               type="email"
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
+              placeholder=""
+              className="w-full px-4 py-3 md:py-3.5  bg-gray-800  rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium  border border-gray-600"
             />
           </div>
 
@@ -172,7 +176,8 @@ const ContactUs = () => {
               value={formData.phone}
               onChange={handleChange}
               type="tel"
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
+              placeholder=""
+              className="w-full px-4 py-3 md:py-3.5  bg-gray-800  rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium  border border-gray-600"
             />
           </div>
 
@@ -190,14 +195,15 @@ const ContactUs = () => {
               value={formData.message}
               onChange={handleChange}
               rows="5"
-              className="w-full px-4 py-3 md:py-3.5 bg-[linear-gradient(to_right,_#3D3E56_0%,_#23244A_74%)] rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium border-2 border-slate-400"
+              placeholder=""
+              className="w-full px-4 py-3 md:py-3.5  bg-gray-800 rounded-lg outline-none text-white placeholder-gray-300 text-sm font-medium  border border-gray-600"
             ></textarea>
           </div>
 
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/30 hover:bg-[#6568ff]/60 text-white font-bold py-6 md:py-3.8 px-4 md:px-0 rounded-lg border-2 border-slate-400 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
+              className="w-[160px] md:w-[190px] h-[40px] md:h-[30px] bg-[#6568ff]/60 hover:bg-[#6568ff]/30 text-white font-bold py-6 md:py-3.8 px-4 md:px-0 rounded-lg  border border-gray-600 transition duration-300 font-inter text-xl md:text-xl flex items-center justify-center"
             >
               Submit
             </button>
