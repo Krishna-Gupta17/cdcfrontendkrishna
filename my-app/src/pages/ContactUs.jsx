@@ -61,7 +61,7 @@ const ContactUs = () => {
           />
 
           {/* Black overlay for readability */}
-          <div className="absolute inset-0 bg-black bg-opacity-60 rounded-xl p-6 flex flex-col justify-start items-start">
+          <div className="absolute inset-0 bg-black bg-opacity-20 rounded-xl p-6 flex flex-col justify-start items-start">
             <h2 className="text-6xl font-bold font-inter mb-4 text-white">
               Contact Us
             </h2>
