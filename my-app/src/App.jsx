@@ -17,7 +17,7 @@ import EventsPage from "./pages/EventsPage.jsx";
 import AdminPage from "./pages/adminpage.jsx";
 import TeamPage from "./pages/TeamPage.jsx"
 import MembersList from "./components/memberPage/MembersList.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
+import ProfilePage2 from "./pages/ProfilePage2.jsx";
 import Eventsection from "./sections/Eventsection.jsx";
 import Blog from "./pages/BlogsPage.jsx";
 function App() {
@@ -39,13 +39,13 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<EventRegisteration/>}/>
         <Route path="/eventpage/:eventId" element={<EventsPage/>}/>
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage2 />} />
         <Route path="/members/blog/:id" element={<Blog />} />
         <Route path="/teams" element={<TeamPage />}>
           <Route index element={<MembersList year="2025" />} />
           <Route path=":year" element={<MembersList />} />
         </Route>
-        <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/profile" element={<ProfilePage2/>} />
       </Routes>
       <Footer />
     </>
