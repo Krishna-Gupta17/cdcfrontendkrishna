@@ -110,14 +110,14 @@ const Navbar = () => {
                 </div>
             </div>
             <div
-                className={`fixed top-0 right-0 h-full w-[14%] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-0 right-0 h-full w-[60vw] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}
             >
                 <div className="flex justify-end p-4">
                     <button
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="text-white text-2xl font-bold"
-                    >
+                    > 
                     </button>
                 </div>
                 <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold h-[50vh]"
