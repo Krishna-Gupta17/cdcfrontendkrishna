@@ -14,21 +14,37 @@ import { useState, useEffect } from "react";
 
 const Navbar = () => {
 
-    const [isMobileMenuOpen, setIsMobileMenuOpen]=useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const [currentUser, setCurrentUser] = useState(null);
 
+    // useEffect(() => {
+    //     const token = localStorage.getItem('firebaseToken');
+    //     if (token) {
+    //         setCurrentUser(true);
+    //     } else {
+    //         const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //             setCurrentUser(!!user);
+    //         });
+    //         return () => unsubscribe();
+    //     }
+    // }, []);
+
     useEffect(() => {
-        const token = localStorage.getItem('firebaseToken');
-        if (token) {
-            setCurrentUser(true);
-        } else {
-            const unsubscribe = onAuthStateChanged(auth, (user) => {
-                setCurrentUser(!!user);
-            });
-            return () => unsubscribe();
-        }
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const token = await user.getIdToken(); 
+                localStorage.setItem('firebaseToken', token);
+                setCurrentUser(true);
+            } else {
+                localStorage.removeItem('firebaseToken');
+                setCurrentUser(false);
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
+
 
 
     return (
@@ -50,15 +66,15 @@ const Navbar = () => {
                         <li><Link to="/" class="hover:text-blue-400">Home</Link></li>
                         <li><Link to="/#events" class="hover:text-blue-400">Events</Link></li>
                         <li><Link to="/resources" class="hover:text-blue-400">Resources</Link></li>
-                         <li><Link to="/teams" class="hover:text-blue-400">Teams</Link></li>
+                        <li><Link to="/teams" class="hover:text-blue-400">Teams</Link></li>
                         <li><Link to="/contact" class="hover:text-blue-400">Contact</Link></li>
                         {!currentUser ? (
                             <li><Link to="/login" class="hover:text-blue-400">Login</Link></li>
                         ) : (
                             <li><Link to="/profile" class="hover:text-blue-400">Profile</Link></li>
                         )}
-                        {}
-                       
+                        { }
+
                     </ul>
                 </div>
                 <div className=" w-[20%] flex justify-end relative h-[100%]">
@@ -76,7 +92,7 @@ const Navbar = () => {
                 <div className="text-xl sm:text-3xl font-bold text-center">
                     Coders & Developers Club
                 </div>
-                <div className="cursor-pointer" onClick={()=>setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                <div className="cursor-pointer" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                     <div className="relative w-6 h-6 cursor-pointer z-[10000]" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                         <span
                             className={`block absolute h-0.5 w-full bg-white transform transition duration-300 ease-in-out ${isMobileMenuOpen ? 'rotate-45 top-2.5' : 'top-1'
@@ -94,14 +110,14 @@ const Navbar = () => {
                 </div>
             </div>
             <div
-                className={`fixed top-0 right-0 h-full w-[14%] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                className={`fixed top-0 right-0 h-full w-[60vw] text-white z-[9999] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}
             >
                 <div className="flex justify-end p-4">
                     <button
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="text-white text-2xl font-bold"
-                    >
+                    > 
                     </button>
                 </div>
                 <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold h-[50vh]"

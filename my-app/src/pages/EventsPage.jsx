@@ -51,39 +51,41 @@ const EventsPage = () => {
           <h2 className="text-4xl font-bold text-center mt-20 mb-16">
             Winners Through the Years
           </h2>
-     
-
       {/* Timeline Section */}
       <div className="relative w-full max-w-7xl mx-auto px-4 pb-32">
         {/* Vertical Line */}
-        <div className="absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 w-1 bg-white/40 z-0" />
+      <div className="absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 w-1 bg-white/40 z-0" />
 
-        {sortedYears.map((year) => (
-          <motion.div
-            key={year}
-            className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-x-20 mb-32"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            {/* Stats Card */}
-            <div className="md:w-1/2 md:pr-10 flex justify-end mb-6 md:mb-0">
-              <StatsCard stats={timelineByYear[year].stats} />
-            </div>
-
-            {/* Year */}
-            <div className="absolute left-1/2 transform-translate-x-1/2 bg-white text-black text-xl font-bold rounded-full w-14 h-14 flex items-center justify-center border-4 border-black z-20">
-              {year}
-            </div>
-
-            {/* Winner Card */}
-            <div className="md:w-1/2 flex justify-start pl-8">
-              <WinnerCard eventId={eventId} year={year} />
-            </div>
-          </motion.div>
-        ))}
+  {sortedYears.map((year, index) => (
+    <React.Fragment key={year}>
+      {/* Year Point */}
+      <div className="relative flex justify-center mb-16">
+        <div className="bg-white text-black text-xl font-bold rounded-full w-14 h-14 flex items-center justify-center border-4 border-black z-20">
+          {year}
+        </div>
       </div>
+
+      {/* Cards between this year and the next */}
+      <motion.div
+  className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-x-20 mb-32"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: false, amount: 0.3 }}
+  transition={{ duration: 0.6 }}
+>
+  <div className="md:w-1/2 md:pr-10 flex justify-end mb-6 md:mb-0">
+    <StatsCard stats={timelineByYear[year].stats} />
+  </div>
+
+  <div className="md:w-1/2 flex justify-start pl-8">
+    <WinnerCard eventId={eventId} year={year} />
+  </div>
+</motion.div>
+
+    </React.Fragment>
+  ))}
+</div>
+
     </>
       )}
   </div>
