@@ -41,17 +41,17 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="px-4 py-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div className="px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
         {/* Left Side */}
-        <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] rounded-xl overflow-hidden bg-gradient-to-r from-[#3D3E56] to-[#23244A] shadow-lg">
+        <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] rounded-xl overflow-hidden bg-gradient-to-r from-[#3D3E56] to-[#23244A] shadow-lg ">
           <Player
             autoplay
             loop
             src={animationData}
             style={{ height: "100%", width: "100%" }}
-            className="opacity-50"
+            className=" opacity-50 "
           />
           <div className="absolute inset-0 bg-black bg-opacity-30 rounded-xl p-4 sm:p-6 flex flex-col justify-start items-start">
             <h2 className="text-3xl sm:text-5xl font-bold mb-4 text-white">Contact Us</h2>
@@ -79,7 +79,7 @@ const ContactUs = () => {
         {/* Right Side: Form */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 w-full max-w-md mx-auto md:mx-0"
+          className="space-y-6 w-full max-w-md mx-auto md:mx-0 "
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex flex-col">
