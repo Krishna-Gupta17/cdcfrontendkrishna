@@ -49,7 +49,7 @@ const Roadmap = ({ mainHeading, subHeading, steps }) => {
           >
             {/* Step Circle - stays on top of the line */}
             <div className="flex flex-col items-center relative z-20 w-10 sm:w-12 md:w-16">
-              <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-purple-700 border-2 sm:border-3 md:border-4 border-blue-300 rounded-full flex items-center justify-center text-white text-[10px] sm:text-sm md:text-base font-extrabold shadow-[0_0_6px_rgba(59,130,246,0.4)] hover:shadow-[0_0_12px_rgba(99,102,241,0.6)] transition">
+              <div className="w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-purple-700 border-2 sm:border-2 md:border-4 border-blue-300 rounded-full flex items-center justify-center text-white text-[10px] sm:text-sm md:text-base font-extrabold shadow-[0_0_6px_rgba(59,130,246,0.4)] hover:shadow-[0_0_12px_rgba(99,102,241,0.6)] transition">
                 {String(index + 1).padStart(2, "0")}
               </div>
             </div>

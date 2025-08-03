@@ -30,7 +30,7 @@ const EventsPage = () => {
     if (!timelineByYear[item.year]) {
       timelineByYear[item.year] = {
         stats: item.stats,
-        ranks: [],
+        ranks: [], 
       };
     }
     timelineByYear[item.year].ranks.push(item);
