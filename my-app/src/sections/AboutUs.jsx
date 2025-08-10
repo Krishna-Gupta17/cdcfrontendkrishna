@@ -58,7 +58,7 @@ export default function AboutUs() {
   const loopedFeatures = [...features, ...features];
 
   return (
-    <div className="w-full min-h-screen relative flex items-center justify-center bg-transparent px-4 py-[2%]">
+    <div className="w-full min-h-screen relative flex items-center justify-center bg-transparent px-4">
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
@@ -74,10 +74,9 @@ export default function AboutUs() {
           hover:shadow-[0_6px_40px_rgba(255,255,255,0.2)]
           custom-md4:p-10
           p-0
-          flex flex-col custom-md1:flex-row gap-10
+          flex flex-col custom-md1:flex-row
           will-change-transform
           overflow-hidden
-          mt-20
         "
         style={{ transformStyle: "preserve-3d" }}
       >
@@ -92,7 +91,7 @@ export default function AboutUs() {
           </p>
         </div>
         <div className="custom-md4:hidden flex-1 px-4 pt-4 text-white">
-          <h2 className="text-2xl sm:text-3xl text-center font-bold mb-3">About Us</h2>
+          <h2 className="text-2xl sm:text-3xl text-center font-bold mb-2">About Us</h2>
           <p className="text-sm sm:text-base text-justify text-white/90 leading-snug" style={{ fontFamily: 'Coolvetica' }}>
             The Coders & Developers Club MMMUT fosters a strong coding culture by empowering students
             with continuous learning, tech awareness, and active contest involvement. Collaborating
