@@ -34,6 +34,7 @@ const Login = () => {
       const firebaseToken = await userCredential.user.getIdToken(true);
 
       const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/firebase-auth/login`, {
+      // const res = await axios.post(`http://localhost:4200/firebase-auth/login`, {
         firebaseToken
       });
 
