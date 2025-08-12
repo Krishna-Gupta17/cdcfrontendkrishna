@@ -2,9 +2,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 import flag from "../assets/events/icon_2.png";
 import man from "../assets/events/icon_1.png";
+import axios from "axios";
+import {auth} from '../firebase';
 
+import { useNavigate } from "react-router-dom";
 const EventDetails = ({ event }) => {
   if (!event) return null;
+   const navigate = useNavigate();
+  const handleClick = async () => {
+    try {
+      const user = auth.currentUser;
+      if(!user) navigate("/login")
+      const token = await user.getIdToken();
+
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/team-status`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.hasTeam) {
+        navigate("/dashboard");
+      } else {
+        navigate("/register");
+      }
+    } catch (error) {
+      console.error("API Error:", error);
+      // Optionally show an error message instead of navigating
+    }
+  };
 
   return (
     <div>
@@ -28,11 +51,11 @@ const EventDetails = ({ event }) => {
                   </Link>
                 </div>
                 <div>
-                  <Link to="/register">
-                    <button className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-xl font-inter font-bold px-4 py-2 w-[176px] custom-lg1:w-[192px] h-10 rounded-xl transition">
+                    <button 
+                    onClick={handleClick}
+                    className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-xl font-inter font-bold px-4 py-2 w-[176px] custom-lg1:w-[192px] h-10 rounded-xl transition">
                       Register Now
                     </button>
-                  </Link>
                 </div>
               </div>
 
@@ -112,12 +135,16 @@ const EventDetails = ({ event }) => {
                     </button>
                   </Link>
                 </div>
-                <div className="flex justify-center">
-                  <Link to="/register">
-                    <button className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-sm am:text-lg md:text-xl font-inter font-bold px-4 py-2 w-[124px] sm:w-[160px] md:w-[176px] h-8 md:h-10 rounded-xl transition">
+                <div 
+                onc
+                className="flex justify-center">
+                    <button
+                                        onClick={handleClick}
+
+                    className="bg-[#6568ff]/50 hover:bg-[#4944d8] text-white text-sm am:text-lg md:text-xl font-inter font-bold px-4 py-2 w-[124px] sm:w-[160px] md:w-[176px] h-8 md:h-10 rounded-xl transition">
                       Register Now
                     </button>
-                  </Link>
+                  
                 </div>
                 </div>
       </div>
@@ -126,3 +153,4 @@ const EventDetails = ({ event }) => {
 };
 
 export default EventDetails;
+
