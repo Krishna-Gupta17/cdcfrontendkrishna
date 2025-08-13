@@ -26,7 +26,7 @@ const WinnerCard = ({ eventId, year }) => {
   if (!item) return null;
 
   return (
-    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] rounded-2xl text-white px-6 py-10 w-full max-w-sm md:w-[450px] mx-auto shadow-lg transition-all m-5 duration-500  flex flex-col items-center``">
+    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] rounded-2xl border border-violet-500 text-white px-6 py-10 w-full max-w-sm md:w-[450px] mx-auto shadow-lg transition-all m-5 duration-500 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-[0_0_30px_#7760CB] flex flex-col items-center``">
       <h3 className="text-center text-xl font-semibold mb-2">{item.title}</h3>
       <img
         src={item.image}
