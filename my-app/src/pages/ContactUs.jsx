@@ -161,7 +161,8 @@
 //   );
 // };
 import React, { useState } from "react";
-import axios from "axios"; // ✅ Missing import fixed
+import axios from "axios"; 
+import { FaWhatsapp, FaTelegramPlane, FaDiscord } from "react-icons/fa";
 import {
   Mail,
   Phone,
@@ -250,44 +251,47 @@ const ContactUs = () => {
             />
           </div>
 
-          {/* Contact Cards */}
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              {
-                icon: Mail,
-                title: "Email",
-                value: "hello@coderspace.dev",
-                href: "mailto:hello@coderspace.dev",
-              },
-              {
-                icon: Phone,
-                title: "Phone",
-                value: "+1 (555) 123-4567",
-                href: "tel:+15551234567",
-              },
-              {
-                icon: MapPin,
-                title: "Location",
-                value: "San Francisco, CA",
-                href: "#",
-              },
-            ].map((contact, index) => (
-              <a
-                key={index}
-                href={contact.href}
-                className="group bg-white/5 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:bg-white/10 transition-all duration-300 hover:border-blue-500/50"
-              >
-                <contact.icon
-                  className="text-blue-400 group-hover:text-blue-300 mb-2"
-                  size={24}
-                />
-                <p className="text-sm text-gray-400 mb-1">{contact.title}</p>
-                <p className="text-white font-medium group-hover:text-blue-300 transition-colors duration-200">
-                  {contact.value}
-                </p>
-              </a>
-            ))}
-          </div>
+        {/* Contact Cards */}
+<div className="grid md:grid-cols-3 gap-4">
+  {[
+    {
+      icon: FaWhatsapp,
+      title: "WhatsApp",
+      value: "+91 6386532383",
+      href: "https://api.whatsapp.com/send/?phone=6386532383&text&type=phone_number&app_absent=0",
+    },
+    {
+      icon: FaTelegramPlane,
+      title: "Telegram",
+      value: "CDC - Support",
+      href: "https://t.me/+uRatnueLZQRlMzk1",
+    },
+    {
+      icon: FaDiscord,
+      title: "Discord",
+      value: "Coders and Developers Club",
+      href: "https://discord.gg/KaDf3ZYahy",
+    },
+  ].map((contact, index) => (
+    <a
+      key={index}
+      href={contact.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group bg-white/5 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:bg-white/10 transition-all duration-300 hover:border-blue-500/50"
+    >
+      <contact.icon
+        className="text-blue-400 group-hover:text-blue-300 mb-2"
+        size={24}
+      />
+      <p className="text-sm text-gray-400 mb-1">{contact.title}</p>
+      <p className="text-white font-medium group-hover:text-blue-300 transition-colors duration-200">
+        {contact.value}
+      </p>
+    </a>
+  ))}
+</div>
+
         </div>
 
         {/* Right Side - Form */}
