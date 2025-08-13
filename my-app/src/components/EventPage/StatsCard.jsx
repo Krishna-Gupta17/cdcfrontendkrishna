@@ -4,7 +4,8 @@ import man from "../../assets/events/icon_1.png";
 
 const StatsCard = ({ stats }) => {
   return (
-    <div className="bg-gradient-to-br from-[#2A174E] to-[#311B63] rounded-2xl border border-violet-500 text-white px-6 py-4 w-[400px] md:w-[460px] lg:w-[500px]">
+    <div className="bg-gradient-to-br from-[#2A174E] to-[#311B63] rounded-2xl border border-violet-500 text-white px-6 py-10 w-full ">
+      {/* Changes the layout from a row on small screens and up to a column on mobile */}
       <div className="flex flex-col sm:flex-row justify-around items-center gap-y-6 gap-x-10">
         {/* Students Attended Workshops */}
         <div className="flex items-center gap-4">

@@ -26,12 +26,12 @@ const WinnerCard = ({ eventId, year }) => {
   if (!item) return null;
 
   return (
-    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] rounded-2xl text-white p-5 w-64 shadow-lg transition-all m-5 duration-500">
+    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] rounded-2xl text-white px-6 py-10 w-full max-w-sm md:w-[450px] mx-auto shadow-lg transition-all m-5 duration-500  flex flex-col items-center``">
       <h3 className="text-center text-xl font-semibold mb-2">{item.title}</h3>
       <img
         src={item.image}
         alt="winner-photo"
-        className="w-auto h-40 object-cover rounded-xl mb-2"
+        className="w-auto h-32 sm:h-40 object-cover rounded-xl mb-2"
       />
       <div className="text-center text-yellow-400 text-lg font-bold mb-2">
         🥉 Rank {item.rank}
