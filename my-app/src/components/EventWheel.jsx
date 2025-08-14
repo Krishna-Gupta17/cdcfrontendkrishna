@@ -184,9 +184,9 @@ const EventWheel = () => {
           {/* Center display */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="text-center">
-              <div className="text-2xl font-bold uppercase tracking-wider mb-2">
+              {/* <div className="text-2xl font-bold uppercase tracking-wider mb-2">
                 {eventDes[currentIndex].name}
-              </div>
+              </div> */}
               <img
                 src={eventDes[currentIndex].image}
                 alt={eventDes[currentIndex].name}

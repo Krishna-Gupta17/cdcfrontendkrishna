@@ -83,7 +83,7 @@ const Eventsection = () => {
   return (
     <section
       id="events"
-      className="w-full min-h-screen bg-gradient-to-br from-[#06051C] via-[#0A0825] to-[#0D0B2E] p-6 flex flex-col items-center justify-center px-4 py-8"
+      className="w-full min-h-screen  flex flex-col items-center justify-center px-4 py-8"
     >
       <EventWheel
         events={eventData}

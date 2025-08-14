@@ -31,7 +31,7 @@ const EventDetails = ({ event }) => {
 
   return (
     <div>
-      <div className=" text-white px-6 py-11 w-[100%] mt-2 hidden custom-lg3:block">
+      <div className=" text-white px-6 py-11 w-[100%] mt-12 hidden custom-lg3:block">
         <h2 className="text-3xl sm:text-4xl custom-md2:text-5xl custom-md3:text-6xl text-center font-bold mb-10">Our Events</h2>
 
         <div className="flex w-full pl-4 mr-4">
