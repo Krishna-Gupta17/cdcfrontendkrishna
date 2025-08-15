@@ -19,6 +19,7 @@ import TeamPage from "./pages/TeamPage.jsx"
 import MembersList from "./components/memberPage/MembersList.jsx";
 import ProfilePage2 from "./pages/ProfilePage2.jsx";
 import Eventsection from "./sections/Eventsection.jsx";
+import EventsPages from "./components/EventsPage.jsx";
 import Blog from "./pages/BlogsPage.jsx";
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
          <Route path="/admin" element={<AdminPage />} />
         <Route path="/event" element={<EventsPage />} />
+        <Route path="/eventPage" element={<EventsPages />} />
         <Route path="/resources" element={<ResourcePage />} />
         <Route path="/team" element={<Members />} />
         <Route path="/members/:id" element={<MemberProfile />} />

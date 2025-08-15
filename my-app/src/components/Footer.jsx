@@ -59,7 +59,7 @@ const Footer = () => {
                     </Link>
                   </div>
                   <div className="flex justify-center gap-[17%]">
-                    <Link to="/event">
+                    <Link to="/eventPage">
                       <li className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 hover:text-cyan-400 ease-in-out">
                         <img src={event} alt="events" className="w-[24px] custom-md3:w-[33px]" />
                         EVENT

@@ -7,23 +7,22 @@ import navbarleft from '../assets/navbar/navbarleft.png';
 import axios from "axios";
 import editicon from "../assets/edit.jpg"
 import ReactQuill from "react-quill"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "react-quill/dist/quill.snow.css"
-import { getAuth } from "firebase/auth";
 
 const MemberProfile = () => {
   const { id } = useParams();
+  const [user, setUser] = useState(null);
   const [member, setMember] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [yourProfile,setyourProfile] = useState(false);
   const [showAddForm, setAddForm] = useState(false);
   const [formData, setFormData] = useState({
     memberName: '',
     memberImage: null,
     memberBio: '',
     linkedin: '',
-    github: '',
-    memberEmail:'' //getting this from back as memberEmail
+    github: ''
   });
   const [blogData, setBlogData] = useState({
     title: '',
@@ -31,20 +30,6 @@ const MemberProfile = () => {
     images: null,
     description: '',
   });
-
-  useEffect(()=>{
-    const auth= getAuth();
-    const user= auth.currentUser;
-
-   if (user && member) {
-    if (user.email === member.memberEmail) {
-      setyourProfile(true);
-    } else {
-      setyourProfile(false);
-    }
-  }
-}, [member]);
-
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_SERVER_URL}/members/${id}`)
@@ -57,8 +42,7 @@ const MemberProfile = () => {
           memberImage: null,
           memberBio: data.memberBio || '',
           linkedin: data.memberSocial?.linkedin || '',
-          github: data.memberSocial?.github || '',
-          memberEmail: data.memberEmail || '',
+          github: data.memberSocial?.github || ''
         });
       })
       .catch((err) => {
@@ -66,29 +50,58 @@ const MemberProfile = () => {
       });
   }, [id]);
 
+  useEffect(() => {
+    const auth = getAuth();
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const token = await firebaseUser.getIdToken(true);
+          console.log("Token:", token);
+          const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
+            // const res = await axios.get('http://localhost:4200/user/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(res);
+
+          if (res.data.success) {
+            setUser(res.data.user);
+          } else {
+            console.warn("Backend did not return success");
+          }
+        } catch (error) {
+          console.error("Error in fetchUserData:", error);
+        }
+      }
+      else {
+        console.log("No user is signed in");
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
   const handleCreateBlog = async (e) => {
     e.preventDefault();
     try {
-      const auth = getAuth();
-      const email= member.memberEmail;//using the current memberprofile's memberEmail
-      const currentUser = auth.currentUser;
-      const token = await currentUser.getIdToken(true);
       const form = new FormData();
       form.append("title", blogData.title);
       form.append("description", blogData.description);
       form.append("content", blogData.content);
-      form.append("email", email);
 
       if (blogData.images) {
         form.append("image", blogData.images);
       }
-      console.log(member.memberEmail);
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/members/${id}`, form, {
+
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}`, form, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
         }
-        });
+      });
 
       console.log("Blog added:", res.data);
 
@@ -216,7 +229,11 @@ const MemberProfile = () => {
                 <div className="flex gap-4 mt-2">
                   {member.memberSocial?.linkedin && (
                     <a
-                      href={member.memberSocial.linkedin}
+                      href={
+                        member.memberSocial.linkedin.startsWith("http")
+                          ? member.memberSocial.linkedin
+                          : `https://${member.memberSocial.linkedin}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300"
@@ -226,7 +243,11 @@ const MemberProfile = () => {
                   )}
                   {member.memberSocial?.github && (
                     <a
-                      href={member.memberSocial.github}
+                      href={
+                        member.memberSocial.github.startsWith("http")
+                          ? member.memberSocial.github
+                          : `https://${member.memberSocial.github}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-gray-300"
@@ -247,10 +268,30 @@ const MemberProfile = () => {
         </div>
 
         <div className="text-white font-inter font-bold ml-4 mr-4 px-4 mb-9 md:ml-16 md:mr-16 md:pl-8 md:pr-8 md:mb-10">
-          {yourProfile && 
-          (<div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <h4 className="text-xl">Blogs and posts</h4>
-            <div className="flex items-center gap-2">
+            {user?.role == "member" && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowForm(prev => !prev)}
+                  className="flex items-center gap-2 px-2 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium"
+                  title="Edit Profile"
+                >
+                  <img src={editicon} alt="edit" className="w-6 h-6" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAddForm(prev => !prev)}
+                  className="flex items-center gap-2 px-2 py-1 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white font-medium"
+                  title="Add Blog"
+                >
+                  <span className="text-xl">+</span>
+                </button>
+              </div>
+
+            )}
+            {/* <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setShowForm(prev => !prev)}
@@ -267,8 +308,8 @@ const MemberProfile = () => {
               >
                 <span className="text-xl">+</span>
               </button>
-            </div>
-          </div>)}
+            </div> */}
+          </div>
           <div className="h-[2px] w-full bg-yellow-200 mt-5 rounded-full shadow-[0_4px_12px_rgba(250,204,21,0.5)]" />
         </div>
 
@@ -381,7 +422,7 @@ const MemberProfile = () => {
                   onClick={() => setShowForm(false)}
                   className="absolute top-4 right-4 text-white hover:text-red-500 text-xl font-bold"
                 >
-                  X
+                  ×
                 </button>
 
                 <h2 className="text-white text-xl font-bold mb-4 pt-4">Edit Profile</h2>

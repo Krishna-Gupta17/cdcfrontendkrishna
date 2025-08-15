@@ -14,10 +14,10 @@ const AdminPage = () => {
   const [showAddTeam, setAddTeam] = useState(false);
   const [showAddUser, setAddUser] = useState(false);
   const [newMember, setNewMember] = useState({
-    name: '',
-    email: '',
-    role: '',
-    batch: ''
+    memberName: '',
+    memberEmail: '',
+    memberRole: '',
+    memberYear: ''
   });
   const [userData, setUserData] = useState({
     firstName: "",
@@ -1169,7 +1169,6 @@ const AdminPage = () => {
         )}
       </div>
     </div>
-  );
-}
+  )};
 
 export default AdminPage;

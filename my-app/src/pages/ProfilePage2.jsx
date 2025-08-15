@@ -36,7 +36,7 @@ const ProfileCard = () => {
       const currentUser = auth.currentUser;
       const token = await currentUser.getIdToken(true);
       // const res = await axios.put(`${import.meta.env.VITE_SERVER_URL}/user/profile`,
-       const res = await axios.put(`http://localhost:4200/user/profile`,
+       const res = await axios.put(`${import.meta.env.VITE_SERVER_URL}/user/profile`,
         editableUser,
         {
           headers: {

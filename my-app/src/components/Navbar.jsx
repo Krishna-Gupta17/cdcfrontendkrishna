@@ -61,7 +61,7 @@ const Navbar = () => {
                 <div className="flex-1 flex justify-center">
                     <ul class="flex space-x-6 text-[16px] custom-md1:text-[19.3232px] custom-lg:text-[17px] font-bold tracking-wider uppercase">
                         <li><Link to="/" class="hover:text-blue-400">Home</Link></li>
-                        <li><Link to="/#events" class="hover:text-blue-400">Events</Link></li>
+                        <li><Link to="/eventPage" class="hover:text-blue-400">Events</Link></li>
                         <li><Link to="/resources" class="hover:text-blue-400">Resources</Link></li>
                         <li><Link to="/teams" class="hover:text-blue-400">Teams</Link></li>
                         <li><Link to="/contact" class="hover:text-blue-400">Contact</Link></li>
@@ -120,7 +120,7 @@ const Navbar = () => {
                 <nav className="flex flex-col items-center space-y-6 mt-8 text-lg font-inter font-semibold h-[50vh]"
                 >
                     <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Home</Link>
-                    <Link to="/#events" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Events</Link>
+                    <Link to="/eventPage" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Events</Link>
                     <Link to="/resources" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Resources</Link>
                     <Link to="/teams" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Teams</Link>
                     <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-blue-400">Contact</Link>

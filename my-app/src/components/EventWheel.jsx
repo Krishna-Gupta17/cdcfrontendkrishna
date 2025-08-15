@@ -1,190 +1,230 @@
-import React, { useEffect, useRef, useState } from "react";
-import ellipse12 from "../assets/eventsection/Ellipse 12.png";
-import gsap from "gsap";
-const EventWheel = ({ events, currentIndex, setCurrentIndex }) => {
-  const radius = 200;
+// EventWheel.jsx
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { gsap } from "gsap";
+import eventDes from "../data/eventDes"; // ✅ Import your existing data
+import EventDetails from "./EventDetails";
+
+const EventWheel = () => {
+  const carouselRef = useRef(null);
+  const itemRefs = useRef([]);
+  const labelRefs = useRef([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [rotation, setRotation] = useState(-90);
+  const [isDragging, setIsDragging] = useState(false);
+  const [lastY, setLastY] = useState(0);
+
+  const radius = 100;
   const centerX = 200;
-  const centerY = 200; // Moved center down slightly
-  const angleStep = 90;
+  const centerY = 200;
 
-  const [rotation, setRotation] = useState(0);
-  const rotationRef = useRef(0);
-  const timeoutRef = useRef(null);
-  const wheelRef1 = useRef(null);
-  const wheelRef2 = useRef(null);
+  const updateCarouselPositions = useCallback(
+    (rotationAngle) => {
+      const totalItems = eventDes.length;
+      const angleStep = 360 / totalItems;
 
-  useEffect(() => {
-    const handleScroll = (e) => {
-      e.preventDefault();
+      eventDes.forEach((_, index) => {
+        const item = itemRefs.current[index];
+        const label = labelRefs.current[index];
+        if (!item || !label) return;
 
-      const scrollSpeed = 1.0;
-      const maxDelta = angleStep * 0.5;
+        const angle = index * angleStep + rotationAngle;
+        const radian = (angle * Math.PI) / 180;
+        const x = centerX + radius * Math.cos(radian);
+        const y = centerY + radius * Math.sin(radian);
 
-      let delta =
-        -Math.sign(e.deltaY) * Math.log(Math.abs(e.deltaY) + 1) * scrollSpeed;
-      delta = Math.max(-maxDelta, Math.min(maxDelta, delta));
+        const labelRadius = radius + 40;
+        const labelX = centerX + labelRadius * Math.cos(radian);
+        const labelY = centerY + labelRadius * Math.sin(radian);
 
-      let nextAngle = rotationRef.current + delta;
-      const maxAngle = (events.length - 1) * angleStep;
-      nextAngle = Math.max(-maxAngle, Math.min(0, nextAngle));
+        const normalizedAngle = (angle + 360) % 360;
+        const distanceFromTop = Math.min(
+          Math.abs(normalizedAngle - 270),
+          Math.abs(normalizedAngle - 270 + 360),
+          Math.abs(normalizedAngle - 270 - 360)
+        );
+        const isActive = distanceFromTop < angleStep / 2;
 
-      rotationRef.current = nextAngle;
-      setRotation(nextAngle);
+        gsap.set(item, {
+          x: x - 10,
+          y: y - 10,
+          scale: isActive ? 1.2 : 0.8,
+          zIndex: isActive ? 10 : 1,
+          opacity: isActive ? 1 : 0.6,
+        });
 
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        const estimatedIndex = Math.round(-rotationRef.current / angleStep);
-        const clampedIndex = Math.max(0, Math.min(events.length - 1, estimatedIndex));
-        const targetRotation = -clampedIndex * angleStep;
+        gsap.set(label, {
+          x: labelX - 50,
+          y: labelY - 12,
+          opacity: isActive ? 1 : 0.7,
+          scale: isActive ? 1.1 : 0.9,
+          fontWeight: isActive ? "bold" : "normal",
+        });
 
-        rotationRef.current = targetRotation;
-        setRotation(targetRotation);
-        setCurrentIndex(clampedIndex);
-      }, 300);
-    };
+        if (isActive && currentIndex !== index) {
+          setCurrentIndex(index);
+        }
+      });
+    },
+    [currentIndex]
+  );
 
-    const wheelDiv = wheelRef1.current;
-    if (wheelDiv) {
-      wheelDiv.addEventListener("wheel", handleScroll, { passive: false });
+  const handleStart = useCallback((clientY) => {
+    setIsDragging(true);
+    setLastY(clientY);
+  }, []);
+
+  const handleMove = useCallback(
+    (clientY) => {
+      if (!isDragging) return;
+      const deltaY = clientY - lastY;
+      const rotationSpeed = 0.5;
+      const newRotation = rotation + deltaY * rotationSpeed;
+      setRotation(newRotation);
+      setLastY(clientY);
+      updateCarouselPositions(newRotation);
+    },
+    [isDragging, lastY, rotation, updateCarouselPositions]
+  );
+
+  const handleEnd = useCallback(() => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const totalItems = eventDes.length;
+    const angleStep = 360 / totalItems;
+    const normalizedRotation = ((rotation % 360) + 360) % 360;
+    const targetAngle = 270;
+
+    let closestIndex = 0;
+    let minDistance = Infinity;
+    for (let i = 0; i < totalItems; i++) {
+      const eventAngle = (i * angleStep + normalizedRotation) % 360;
+      const distance = Math.min(
+        Math.abs(eventAngle - targetAngle),
+        Math.abs(eventAngle - targetAngle + 360),
+        Math.abs(eventAngle - targetAngle - 360)
+      );
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = i;
+      }
     }
 
-    return () => {
-      if (wheelDiv) {
-        wheelDiv.removeEventListener("wheel", handleScroll);
-      }
-    };
-  }, [angleStep, events.length, setCurrentIndex]);
+    const targetRotation = 270 - closestIndex * angleStep;
+    setRotation(targetRotation);
 
-  
+    gsap.to({}, {
+      duration: 0.5,
+      ease: "power2.out",
+      onUpdate: function () {
+        const progress = this.progress();
+        const currentRot =
+          rotation + (targetRotation - rotation) * progress;
+        updateCarouselPositions(currentRot);
+      },
+      onComplete: () => {
+        setCurrentIndex(closestIndex);
+      },
+    });
+  }, [isDragging, rotation, updateCarouselPositions]);
+
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    handleStart(e.clientY);
+  };
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    handleStart(e.touches[0].clientY);
+  };
+
   useEffect(() => {
-    const handleScroll = (e) => {
-      e.preventDefault();
-
-      const scrollSpeed = 1.0;
-      const maxDelta = angleStep * 0.5;
-
-      let delta =
-        -Math.sign(e.deltaY) * Math.log(Math.abs(e.deltaY) + 1) * scrollSpeed;
-      delta = Math.max(-maxDelta, Math.min(maxDelta, delta));
-
-      let nextAngle = rotationRef.current + delta;
-      const maxAngle = (events.length - 1) * angleStep;
-      nextAngle = Math.max(-maxAngle, Math.min(0, nextAngle));
-
-      rotationRef.current = nextAngle;
-      setRotation(nextAngle);
-
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        const estimatedIndex = Math.round(-rotationRef.current / angleStep);
-        const clampedIndex = Math.max(0, Math.min(events.length - 1, estimatedIndex));
-        const targetRotation = -clampedIndex * angleStep;
-
-        rotationRef.current = targetRotation;
-        setRotation(targetRotation);
-        setCurrentIndex(clampedIndex);
-      }, 300);
+    const handleGlobalMouseMove = (e) => {
+      if (isDragging) handleMove(e.clientY);
     };
-
-    const wheelDiv = wheelRef2.current;
-    if (wheelDiv) {
-      wheelDiv.addEventListener("wheel", handleScroll, { passive: false });
+    const handleGlobalMouseUp = () => {
+      if (isDragging) handleEnd();
+    };
+    if (isDragging) {
+      document.addEventListener("mousemove", handleGlobalMouseMove);
+      document.addEventListener("mouseup", handleGlobalMouseUp);
     }
-
     return () => {
-      if (wheelDiv) {
-        wheelDiv.removeEventListener("wheel", handleScroll);
-      }
+      document.removeEventListener("mousemove", handleGlobalMouseMove);
+      document.removeEventListener("mouseup", handleGlobalMouseUp);
     };
-  }, [angleStep, events.length, setCurrentIndex]);
+  }, [isDragging, handleMove, handleEnd]);
+
+  useEffect(() => {
+    updateCarouselPositions(rotation);
+  }, [updateCarouselPositions, rotation]);
 
   return (
-   <div>
-    <div
-      ref={wheelRef1}
-      className="relative w-[400px] h-[520px] ml-0 mt-20 hidden custom-lg3:block z-4"
-    >
-      {/* Static Orbit Image */}
-      <img
-        src={ellipse12}
-        alt="orbit"
-        className="absolute -left-40 top-16 w-[400px] h-[500px] pointer-events-none"
-      />
+    <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-12 px-6 text-white">
+      {/* Wheel */}
+      <div className="relative w-[80vw] max-w-[400px] aspect-square flex-shrink-0">
+        <div
+          ref={carouselRef}
+          className="relative w-full h-full cursor-grab active:cursor-grabbing select-none"
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          onTouchMove={(e) => {
+            e.preventDefault();
+            handleMove(e.touches[0].clientY);
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            handleEnd();
+          }}
+          style={{ touchAction: "pan-y" }}
+        >
+          {/* Outer rings */}
+          <div className="absolute inset-8 border border-gray-600/20 rounded-full"></div>
+          <div className="absolute inset-12 border border-gray-700/10 rounded-full"></div>
 
-      {/* Rotating Wheel Items */}
-      <div
-        className="absolute -left-36 top-16 w-[400px] h-[520px] z-10"
-        style={{
-          transform: `rotate(${rotation}deg)`,
-          transition: "transform 0.35s ease-out"
-        }}
-      >
-        {events.map((event, index) => {
-          const angle = index * angleStep;
-          const rad = (angle * Math.PI) / 180;
-          const x = radius * Math.cos(rad);
-          const y = radius * Math.sin(rad);
+          {/* Center display */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-center">
+              {/* <div className="text-2xl font-bold uppercase tracking-wider mb-2">
+                {eventDes[currentIndex].name}
+              </div> */}
+              <img
+                src={eventDes[currentIndex].image}
+                alt={eventDes[currentIndex].name}
+                className="w-16 h-16 mx-auto"
+              />
+              <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mt-2"></div>
+            </div>
+          </div>
 
-          return (
+          {/* Dots */}
+          {eventDes.map((_, index) => (
             <div
               key={index}
-              className={`absolute text-center px-2 py-1 rounded-md 
-                ${index === currentIndex ? "text-white font-semibold shadow-md" : "text-white"}`}
-              style={{
-                left: `${centerX + x}px`,
-                top: `${centerY + y}px`,
-                transform: `translate(-50%, -50%) rotate(${-rotation}deg)`,
-              }}
-            >
-              <span>{event.short}</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-    
-    <div
-      ref={wheelRef2}
-      className="relative flex justify-center items-center mt-10 custom-lg3:hidden"
-    >
-      {/* Static Orbit Image */}
-      <img
-        src={ellipse12}
-        alt="orbit"
-        className="absolute rotate-[90.8deg] w-[280px] sm:w-[360px] md:w-[400px] pointer-events-none"
-      />
+              ref={(el) => (itemRefs.current[index] = el)}
+              className={`absolute w-5 h-5 rounded-full pointer-events-none ${
+                index === currentIndex ? "bg-white shadow-lg" : "bg-gray-400"
+              }`}
+            />
+          ))}
 
-      {/* Rotating Wheel Items */}
-      <div
-        className=" w-[400px] h-[520px] z-10"
-        style={{
-          transform: `rotate(${rotation}deg)`,
-          transition: "transform 0.35s ease-out"
-        }}
-      >
-        {events.map((event, index) => {
-          const angle = index * angleStep;
-          const rad = (angle * Math.PI) / 180;
-          const x = radius * Math.cos(rad);
-          const y = radius * Math.sin(rad);
-
-          return (
+          {/* Labels */}
+          {eventDes.map((event, index) => (
             <div
-              key={index}
-              className={`absolute text-center px-2 py-1 rounded-md 
-                ${index === currentIndex ? "text-white font-semibold shadow-md" : "text-white"}`}
+              key={`label-${event.id}`}
+              ref={(el) => (labelRefs.current[index] = el)}
+              className="absolute text-sm pointer-events-none whitespace-nowrap"
               style={{
-                left: `${centerX + x}px`,
-                top: `${centerY + y}px`,
-                transform: `translate(-50%, -50%) rotate(${-rotation}deg)`,
+                color: index === currentIndex ? "#ffffff" : "#9ca3af",
               }}
             >
-              <span>{event.short}</span>
+              {event.name}
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Event Details */}
+      <EventDetails event={eventDes[currentIndex]} />
     </div>
   );
 };
