@@ -7,10 +7,12 @@ import navbarleft from '../assets/navbar/navbarleft.png';
 import axios from "axios";
 import editicon from "../assets/edit.jpg"
 import ReactQuill from "react-quill"
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "react-quill/dist/quill.snow.css"
 
 const MemberProfile = () => {
   const { id } = useParams();
+  const [user, setUser] = useState(null);
   const [member, setMember] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -48,6 +50,41 @@ const MemberProfile = () => {
       });
   }, [id]);
 
+  useEffect(() => {
+    const auth = getAuth();
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const token = await firebaseUser.getIdToken(true);
+          console.log("Token:", token);
+          const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
+            // const res = await axios.get('http://localhost:4200/user/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(res);
+
+          if (res.data.success) {
+            setUser(res.data.user);
+          } else {
+            console.warn("Backend did not return success");
+          }
+        } catch (error) {
+          console.error("Error in fetchUserData:", error);
+        }
+      }
+      else {
+        console.log("No user is signed in");
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
   const handleCreateBlog = async (e) => {
     e.preventDefault();
     try {
@@ -55,7 +92,7 @@ const MemberProfile = () => {
       form.append("title", blogData.title);
       form.append("description", blogData.description);
       form.append("content", blogData.content);
-      
+
       if (blogData.images) {
         form.append("image", blogData.images);
       }
@@ -79,7 +116,7 @@ const MemberProfile = () => {
         images: null,
         description: '',
       });
-       window.location.reload(true);
+      window.location.reload(true);
     } catch (err) {
       console.error("error:", err);
       alert("Failed to add blog. Please try again.");
@@ -225,7 +262,28 @@ const MemberProfile = () => {
         <div className="text-white font-inter font-bold ml-4 mr-4 px-4 mb-9 md:ml-16 md:mr-16 md:pl-8 md:pr-8 md:mb-10">
           <div className="flex items-center justify-between">
             <h4 className="text-xl">Blogs and posts</h4>
-            <div className="flex items-center gap-2">
+            {user?.role == "member" && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowForm(prev => !prev)}
+                  className="flex items-center gap-2 px-2 py-1 rounded-lg bg-gray-800 hover:bg-gray-700 text-white font-medium"
+                  title="Edit Profile"
+                >
+                  <img src={editicon} alt="edit" className="w-6 h-6" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAddForm(prev => !prev)}
+                  className="flex items-center gap-2 px-2 py-1 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white font-medium"
+                  title="Add Blog"
+                >
+                  <span className="text-xl">+</span>
+                </button>
+              </div>
+
+            )}
+            {/* <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setShowForm(prev => !prev)}
@@ -242,7 +300,7 @@ const MemberProfile = () => {
               >
                 <span className="text-xl">+</span>
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="h-[2px] w-full bg-yellow-200 mt-5 rounded-full shadow-[0_4px_12px_rgba(250,204,21,0.5)]" />
         </div>
@@ -250,8 +308,8 @@ const MemberProfile = () => {
         {blogs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ml-4 mr-4 md:ml-16 md:mr-16 md:px-8 px-4">
             {blogs.map((blog, i) => (
-             <Link to={`/members/blog/${blog._id}`} key={i}>
-              <BlogCard key={blog._id || i} {...blog} />
+              <Link to={`/members/blog/${blog._id}`} key={i}>
+                <BlogCard key={blog._id || i} {...blog} />
               </Link>
             ))}
           </div>
@@ -269,9 +327,9 @@ const MemberProfile = () => {
               >
                 X
               </button>
-              
+
               <h2 className="text-white text-xl font-bold mb-6">Create New Blog</h2>
-              
+
               <form onSubmit={handleCreateBlog} className="space-y-4">
                 <div>
                   <label className="block text-white mb-2">Title</label>
