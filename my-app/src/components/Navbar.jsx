@@ -44,9 +44,6 @@ const Navbar = () => {
 
         return () => unsubscribe();
     }, []);
-
-
-
     return (
         <nav className="w-full font-inter text-white sticky top-0 z-[1000] backdrop-blur-2xl bg-transparent">
             <div className="hidden custom-mdnavbar:flex items-center justify-between py-0 m-0 h-[32%]">

@@ -8,19 +8,22 @@ import axios from "axios";
 import editicon from "../assets/edit.jpg"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
+import { getAuth } from "firebase/auth";
 
 const MemberProfile = () => {
   const { id } = useParams();
   const [member, setMember] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [yourProfile,setyourProfile] = useState(false);
   const [showAddForm, setAddForm] = useState(false);
   const [formData, setFormData] = useState({
     memberName: '',
     memberImage: null,
     memberBio: '',
     linkedin: '',
-    github: ''
+    github: '',
+    memberEmail:'' //getting this from back as memberEmail
   });
   const [blogData, setBlogData] = useState({
     title: '',
@@ -28,6 +31,20 @@ const MemberProfile = () => {
     images: null,
     description: '',
   });
+
+  useEffect(()=>{
+    const auth= getAuth();
+    const user= auth.currentUser;
+
+   if (user && member) {
+    if (user.email === member.memberEmail) {
+      setyourProfile(true);
+    } else {
+      setyourProfile(false);
+    }
+  }
+}, [member]);
+
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_SERVER_URL}/members/${id}`)
@@ -40,7 +57,8 @@ const MemberProfile = () => {
           memberImage: null,
           memberBio: data.memberBio || '',
           linkedin: data.memberSocial?.linkedin || '',
-          github: data.memberSocial?.github || ''
+          github: data.memberSocial?.github || '',
+          memberEmail: data.memberEmail || '',
         });
       })
       .catch((err) => {
@@ -51,20 +69,26 @@ const MemberProfile = () => {
   const handleCreateBlog = async (e) => {
     e.preventDefault();
     try {
+      const auth = getAuth();
+      const email= member.memberEmail;//using the current memberprofile's memberEmail
+      const currentUser = auth.currentUser;
+      const token = await currentUser.getIdToken(true);
       const form = new FormData();
       form.append("title", blogData.title);
       form.append("description", blogData.description);
       form.append("content", blogData.content);
-      
+      form.append("email", email);
+
       if (blogData.images) {
         form.append("image", blogData.images);
       }
-
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}`, form, {
+      console.log(member.memberEmail);
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/members/${id}`, form, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         }
-      });
+        });
 
       console.log("Blog added:", res.data);
 
@@ -79,7 +103,7 @@ const MemberProfile = () => {
         images: null,
         description: '',
       });
-       window.location.reload(true);
+      window.location.reload(true);
     } catch (err) {
       console.error("error:", err);
       alert("Failed to add blog. Please try again.");
@@ -223,7 +247,8 @@ const MemberProfile = () => {
         </div>
 
         <div className="text-white font-inter font-bold ml-4 mr-4 px-4 mb-9 md:ml-16 md:mr-16 md:pl-8 md:pr-8 md:mb-10">
-          <div className="flex items-center justify-between">
+          {yourProfile && 
+          (<div className="flex items-center justify-between">
             <h4 className="text-xl">Blogs and posts</h4>
             <div className="flex items-center gap-2">
               <button
@@ -243,15 +268,15 @@ const MemberProfile = () => {
                 <span className="text-xl">+</span>
               </button>
             </div>
-          </div>
+          </div>)}
           <div className="h-[2px] w-full bg-yellow-200 mt-5 rounded-full shadow-[0_4px_12px_rgba(250,204,21,0.5)]" />
         </div>
 
         {blogs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ml-4 mr-4 md:ml-16 md:mr-16 md:px-8 px-4">
             {blogs.map((blog, i) => (
-             <Link to={`/members/blog/${blog._id}`} key={i}>
-              <BlogCard key={blog._id || i} {...blog} />
+              <Link to={`/members/blog/${blog._id}`} key={i}>
+                <BlogCard key={blog._id || i} {...blog} />
               </Link>
             ))}
           </div>
@@ -269,9 +294,9 @@ const MemberProfile = () => {
               >
                 X
               </button>
-              
+
               <h2 className="text-white text-xl font-bold mb-6">Create New Blog</h2>
-              
+
               <form onSubmit={handleCreateBlog} className="space-y-4">
                 <div>
                   <label className="block text-white mb-2">Title</label>
@@ -356,7 +381,7 @@ const MemberProfile = () => {
                   onClick={() => setShowForm(false)}
                   className="absolute top-4 right-4 text-white hover:text-red-500 text-xl font-bold"
                 >
-                  ×
+                  X
                 </button>
 
                 <h2 className="text-white text-xl font-bold mb-4 pt-4">Edit Profile</h2>

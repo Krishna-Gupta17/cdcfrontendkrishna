@@ -25,7 +25,6 @@ const EventDetails = ({ event }) => {
       }
     } catch (error) {
       console.error("API Error:", error);
-      // Optionally show an error message instead of navigating
     }
   };
 
