@@ -42,8 +42,8 @@ export const events = [
     }
   },
   {
-    id: 'algorithmic-arena',
-    title: 'AlgoOlympics',
+    id: 'algolympics',
+    title: 'Algolympics',
     description: 'Battle of minds in data structures and algorithms',
     // poster: 'https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=800',
     date: 'February 15, 2025',
@@ -79,7 +79,7 @@ export const events = [
     }
   },
   {
-    id: 'code-sprint',
+    id: 'goc',
     title: 'Game Of Codes',
     description: 'Fast-paced coding challenge for quick problem solvers',
     // poster: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -116,7 +116,7 @@ export const events = [
     }
   },
   {
-    id: 'hackcode-championship',
+    id: 'code-cascade',
     title: 'code-cascade',
     description: 'Ultimate coding championship with real-world problem solving',
     // poster: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800',
