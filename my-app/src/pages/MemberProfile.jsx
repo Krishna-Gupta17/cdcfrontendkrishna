@@ -229,7 +229,11 @@ const MemberProfile = () => {
                 <div className="flex gap-4 mt-2">
                   {member.memberSocial?.linkedin && (
                     <a
-                      href={member.memberSocial.linkedin}
+                      href={
+                        member.memberSocial.linkedin.startsWith("http")
+                          ? member.memberSocial.linkedin
+                          : `https://${member.memberSocial.linkedin}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-300"
@@ -239,7 +243,11 @@ const MemberProfile = () => {
                   )}
                   {member.memberSocial?.github && (
                     <a
-                      href={member.memberSocial.github}
+                      href={
+                        member.memberSocial.github.startsWith("http")
+                          ? member.memberSocial.github
+                          : `https://${member.memberSocial.github}`
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-gray-300"
