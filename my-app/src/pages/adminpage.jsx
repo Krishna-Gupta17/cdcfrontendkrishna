@@ -11,6 +11,8 @@ const AdminPage = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [showAddTeam, setAddTeam] = useState(false);
   const [showAddUser, setAddUser] = useState(false);
   const [newMember, setNewMember] = useState({
@@ -284,19 +286,64 @@ const AdminPage = () => {
     });
   };
 
-  const handleAddMember = () => {
-    if (newMember.name && newMember.email && newMember.role && newMember.batch) {
-      const member = {
-        _id: Date.now().toString(),
-        memberName: newMember.name,
-        memberEmail: newMember.email,
-        MemberRole: newMember.role
-      };
-      setMembers([...members, member]);
-      setNewMember({ name: '', email: '', role: '', batch: '' });
-    } else {
-      alert('Please fill in all fields');
+  const handleAddMember = async (e) => {
+  //   if (newMember.name && newMember.email && newMember.role && newMember.batch) {
+  //     const member = {
+  //       _id: Date.now().toString(),
+  //       memberName: newMember.name,
+  //       memberEmail: newMember.email,
+  //       MemberRole: newMember.role
+  //     };
+  //     setMembers([...members, member]);
+  //     setNewMember({ name: '', email: '', role: '', batch: '' });
+  //   } else {
+  //     alert('Please fill in all fields');
+  //   }
+  // };
+  e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const axios = (await import('https://cdn.skypack.dev/axios')).default;
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      if (!currentUser) throw new Error('Not logged in.');
+
+      const token = await currentUser.getIdToken(true);
+
+      const res = await axios.post(
+        `http://localhost:4200/admin/members`,
+        // `${import.meta.env.VITE_SERVER_URL}/admin/members`,
+        newMember,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+      console.log("Member created:", res.data);
+      alert("Member created successfully!");
+      setMembers((prev) => [...prev, res.data]);
+      
+      setNewMember({
+        memberName: '',
+        memberEmail: '',
+        memberRole: '',
+        memberYear: ''
+      });
+      setSubmitted(true);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error creating member:", error);
+      alert("Failed to create member. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
+
+
   };
 
   const filteredData = useMemo(() => {
@@ -1019,40 +1066,40 @@ const AdminPage = () => {
                     <input
                       type="text"
                       placeholder="Member Name"
-                      value={newMember.name}
-                      onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                      value={newMember.memberName}
+                      onChange={(e) => setNewMember({ ...newMember, memberName: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     <input
                       type="email"
                       placeholder="Member Email"
-                      value={newMember.email}
-                      onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
+                      value={newMember.memberEmail}
+                      onChange={(e) => setNewMember({ ...newMember, memberEmail: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     <select
-                      value={newMember.role}
-                      onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
+                      value={newMember.memberRole}
+                      onChange={(e) => setNewMember({ ...newMember, memberRole: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select Role</option>
                       <option value="admin">Admin</option>
-                      <option value="user">user</option>
+                      <option value="member">Member</option>
                     </select>
                     <select
-                      value={newMember.batch}
-                      onChange={(e) => setNewMember({ ...newMember, batch: e.target.value })}
+                      value={newMember.memberYear}
+                      onChange={(e) => setNewMember({ ...newMember, memberYear: e.target.value })}
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select Batch</option>
-                      <option value="2024-28">2024-28</option>
-                      <option value="2023-27">2023-27</option>
-                      <option value="2022-26">2022-26</option>
-                      <option value="2021-25">2021-25</option>
-                      <option value="2020-24">2020-24</option>
-                      <option value="2019-23">2019-23</option>
-                      <option value="2018-22">2018-22</option>
-                      <option value="2017-21">2017-21</option>
+                      <option value="2024">2024-28</option>
+                      <option value="2023">2023-27</option>
+                      <option value="2022">2022-26</option>
+                      <option value="2021">2021-25</option>
+                      <option value="2020">2020-24</option>
+                      <option value="2019">2019-23</option>
+                      <option value="2018">2018-22</option>
+                      <option value="2017">2017-21</option>
                     </select>
                     <button
                       type="button"
