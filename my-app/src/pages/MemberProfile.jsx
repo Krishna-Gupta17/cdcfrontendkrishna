@@ -106,8 +106,8 @@ const MemberProfile = () => {
       }
 
 
-      // const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}/blog`, form, {
-      const res = await axios.post(`http://localhost:4200/members/${id}/blog`, form, {
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}/blog`, form, {
+      // const res = await axios.post(`http://localhost:4200/members/${id}/blog`, form, {
         headers: {
           "Content-Type": "multipart/form-data",
           'Authorization': `Bearer ${token}`,
