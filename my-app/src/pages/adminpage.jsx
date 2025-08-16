@@ -54,6 +54,12 @@ const AdminPage = () => {
 
   });
 
+  const [editMemberId, setEditMemberId] = useState(null);
+  const [editMemberData, setEditMemberData] = useState({
+    memberName: "",
+    memberEmail: "",
+    memberRole: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,8 +106,52 @@ const AdminPage = () => {
     }
   }
 
+  const validateTeamEmails = () => {
+    const teamEmails = [
+      teamData.leader.email,
+      teamData.teammate1.email,
+      teamData.teammate2.email
+    ].filter(email => email.trim() !== '');
+
+    const userEmails = users.map(user => user.email.toLowerCase());
+    const invalidEmails = [];
+    const duplicateEmails = [];
+
+    // Check if emails exist in users database
+    teamEmails.forEach(email => {
+      if (!userEmails.includes(email.toLowerCase())) {
+        invalidEmails.push(email);
+      }
+    });
+
+    // Check for duplicate emails within the team
+    const emailCounts = {};
+    teamEmails.forEach(email => {
+      const lowerEmail = email.toLowerCase();
+      emailCounts[lowerEmail] = (emailCounts[lowerEmail] || 0) + 1;
+      if (emailCounts[lowerEmail] > 1) {
+        duplicateEmails.push(email);
+      }
+    });
+
+    return { invalidEmails, duplicateEmails };
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { invalidEmails, duplicateEmails } = validateTeamEmails();
+
+    if (invalidEmails.length > 0) {
+      alert(`The following emails are not registered users:\n${invalidEmails.join('\n')}\n\nPlease make sure all team members are registered users.`);
+      return;
+    }
+
+    if (duplicateEmails.length > 0) {
+      alert(`Duplicate emails found in team:\n${[...new Set(duplicateEmails)].join('\n')}\n\nEach team member must have a unique email.`);
+      return;
+    }
     const auth = getAuth();
     try {
       const user = auth.currentUser;
@@ -129,8 +179,6 @@ const AdminPage = () => {
         }
 
         const token = await currentUser.getIdToken(true);
-
-        // const res = await fetch(`http://localhost:4200/admin/users/${userId}`, {
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/admin/users/${userId}`, {
           method: 'DELETE',
           headers: {
@@ -222,7 +270,6 @@ const AdminPage = () => {
   const handleTeamData = (e) => {
     const { name, value } = e.target;
     const keys = name.split(".");
-
     setTeamData(prev => {
       const updated = { ...prev };
       let obj = updated;
@@ -251,19 +298,6 @@ const AdminPage = () => {
       alert('Please fill in all fields');
     }
   };
-  const filteredUsers = users.filter(user =>
-    (user.firstName || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const filteredMembers = members.filter(member =>
-    member.memberName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.memberEmail.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const filteredTeams = teams.filter(team =>
-    team.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const filteredData = useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
@@ -274,18 +308,17 @@ const AdminPage = () => {
         (user.email || "").toLowerCase().includes(searchLower)
       ),
       teams: teams.filter(team => {
-        // Add safety checks for team data
         if (!team || typeof team !== 'object') return false;
         const teamName = team.name || '';
         return teamName.toLowerCase().includes(searchLower);
       }),
       members: members.filter(member => {
-        // Add safety checks for member data
+
         if (!member || typeof member !== 'object') return false;
         const memberName = member.memberName || '';
         const memberEmail = member.memberEmail || member.memberEmail || '';
-        return memberName.toLowerCase().includes(searchLower) ||
-          memberEmail.toLowerCase().includes(searchLower);
+        return member.memberName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          member.memberEmail.toLowerCase().includes(searchTerm.toLowerCase())
       })
     };
   }, [users, teams, members, searchTerm]);
@@ -354,58 +387,22 @@ const AdminPage = () => {
         </span>
       </div>
       <div className="flex gap-2">
-        <button className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors">
+        <button
+          onClick={() => handleEditMember(member._id)}
+          className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors">
           Edit
         </button>
         <button
           onClick={() => handleDeleteMember(member._id)}
-          className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
+          className="flex items-center gap-1 
+		if (!req.user || !roles.includes(req.user.role)) {
+			return res.statuspx-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
         >
           Delete
         </button>
       </div>
     </div>
   );
-  {/*
-  const Teamcard = ({ team }) => (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">{team.name}</h3>
-          <p className="text-gray-600">Ranking: #{team.ranking}</p>
-        </div>
-        <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-          {team.members.length + 1} members
-        </span>
-      </div>
-      <div className="mb-4">
-        <h4 className="text-sm font-medium text-gray-700 mb-2">Members:</h4>
-        <div className="space-y-1">
-          {team.members.map((member, index) => (
-            <div key={index} className="text-sm text-gray-600">
-              {member.name} - {member.email}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="flex gap-2">
-        <button
-          className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors"
-          onClick={() => handleEditTeam(team._id)}
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => handleDeleteTeam(team._id)}
-          className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
-        >
-          Delete
-        </button>
-      </div>
-    </div>
-  );
-*/}
-
 
   const TeamCard = ({ team, users = [], setEditTeamData }) => {
     const getUserById = (id) => users.find((u) => u._id === id) || {};
@@ -513,26 +510,29 @@ const AdminPage = () => {
     }
   };
 
-  {/* const handleEditTeam = async (teamID) => {
-    setEditTeamId(teamID);
+  const handleEditMember = async (memberId) => {
+    setEditMemberId(memberId);
     const auth = getAuth();
     const user = auth.currentUser;
     const token = await user.getIdToken();
     setLoading(true);
-    console.log(token)
     try {
-      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/admin/teams/${teamID}`, {
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/admin/members/${memberId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setEditTeamData(res.data);
-
+      setEditMemberData({
+        memberName: res.data.member.memberName,
+        memberEmail: res.data.member.memberEmail,
+        memberRole: res.data.member.memberRole,
+      });
     } catch (err) {
-      alert("Failed to fetch team data");
+      alert("Failed to fetch member data");
     } finally {
       setLoading(false);
     }
   };
-*/}
+
+
   const handleEditUserData = (e) => {
     const { name, value } = e.target;
     setEditUserData(prev => ({ ...prev, [name]: value }));
@@ -540,6 +540,17 @@ const AdminPage = () => {
 
   const handleEditTeamData = (e) => {
     const { name, value } = e.target;
+    if (name === "payment") {
+      setEditTeamData(prev => ({
+        ...prev,
+        payment: {
+          ...prev.payment,
+          status: value,
+          lastupdated: new Date().toISOString()
+        }
+      }));
+      return;
+    }
     const keys = name.split(".");
     setEditTeamData(prev => {
       const updated = { ...prev };
@@ -552,6 +563,11 @@ const AdminPage = () => {
       return updated;
     });
   };
+
+  const handleEditMemberData = (e) => {
+    const { name, value } = e.target;
+    setEditMemberData(prev => ({ ...prev, [name]: value }))
+  }
 
   const submitEditUser = async (e) => {
     e.preventDefault();
@@ -571,9 +587,69 @@ const AdminPage = () => {
     }
   };
 
+  const submitEditMember = async (e) => {
+    e.preventDefault();
+    const memberID = editMemberId;
+    try {
+      const auth = getAuth();
+      const token = await auth.currentUser.getIdToken();
+      const res = await axios.put(`${import.meta.env.VITE_SERVER_URL}/admin/members/${memberID}`, editMemberData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.data.success) throw new Error('Update failed');
+      setMembers(members.map(m => m._id === memberID ? res.data.member : m));
+      const membersResponse = await axios.get(`${import.meta.env.VITE_SERVER_URL}/admin/members`);
+      setMembers(membersResponse.data);
+      setEditMemberId(null);
+      alert('Member updated!');
+    } catch (err) {
+      alert('Failed to update member');
+    }
+  };
+  // Email validation for edit team
+  const validateEditTeamEmails = () => {
+    const teamEmails = [
+      editTeamData.leader.email,
+      editTeamData.teammate1.email,
+      editTeamData.teammate2.email
+    ].filter(email => email.trim() !== '');
+
+    const userEmails = users.map(user => user.email.toLowerCase());
+    const invalidEmails = [];
+    const duplicateEmails = [];
+
+    teamEmails.forEach(email => {
+      if (!userEmails.includes(email.toLowerCase())) {
+        invalidEmails.push(email);
+      }
+    });
+
+    const emailCounts = {};
+    teamEmails.forEach(email => {
+      const lowerEmail = email.toLowerCase();
+      emailCounts[lowerEmail] = (emailCounts[lowerEmail] || 0) + 1;
+      if (emailCounts[lowerEmail] > 1) {
+        duplicateEmails.push(email);
+      }
+    });
+
+    return { invalidEmails, duplicateEmails };
+  };
+
   const submitEditTeam = async (e) => {
     e.preventDefault();
+
+    const { invalidEmails, duplicateEmails } = validateEditTeamEmails();
+    if (invalidEmails.length > 0) {
+      alert(`The following emails are not registered users:\n${invalidEmails.join('\n')}\n\nPlease make sure all team members are registered users.`);
+      return;
+    }
+    if (duplicateEmails.length > 0) {
+      alert(`Duplicate emails found in team:\n${[...new Set(duplicateEmails)].join('\n')}\n\nEach team member must have a unique email.`);
+      return;
+    }
     const teamId = editTeamId;
+    console.log(teamId);
     try {
       const auth = getAuth();
       const token = await auth.currentUser.getIdToken();
@@ -810,6 +886,11 @@ const AdminPage = () => {
                   className="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 p-3 rounded-lg mb-2"
                   required
                 />
+                {teamData.leader.email && !users.some(user => user.email.toLowerCase() === teamData.leader.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
                 <input
                   name="leader.codeforces"
                   type="text"
@@ -840,6 +921,11 @@ const AdminPage = () => {
                   className="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 p-3 rounded-lg mb-2"
                   required
                 />
+                {teamData.teammate1.email && !users.some(user => user.email.toLowerCase() === teamData.teammate1.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
                 <input
                   name="teammate1.codeforces"
                   type="text"
@@ -878,12 +964,17 @@ const AdminPage = () => {
                   placeholder="Teammate 2 Codeforces ID"
                   className="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 p-3 rounded-lg"
                 />
+                {teamData.teammate2.email && !users.some(user => user.email.toLowerCase() === teamData.teammate2.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
               </div>
 
               {/* Payment */}
               <div className="grid md:grid-cols-2 gap-6 items-start">
                 <select
-                  name="payment"
+                  name="payment.status"
                   value={teamData.payment.status}
                   onChange={handleTeamData}
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
@@ -917,7 +1008,7 @@ const AdminPage = () => {
 
           {activeTab === 'members' && (
             <>
-              {filteredMembers.map((member) => (
+              {currentData.map((member) => (
                 <MemberCard key={member._id} member={member} />
               ))}
 
@@ -1046,6 +1137,70 @@ const AdminPage = () => {
           </div>
         )}
 
+        {editMemberId && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="relative bg-gray-900 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <button
+                type="button"
+                onClick={() => setEditMemberId(null)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold"
+              >X</button>
+              <h2 className="text-white text-xl font-bold mb-6">Edit Member</h2>
+              <form onSubmit={submitEditMember} className="space-y-4">
+                <div>
+                  <label className="block text-white mb-2">Member Name</label>
+                  <input
+                    type="text"
+                    name="memberName"
+                    value={editMemberData.memberName}
+                    onChange={handleEditMemberData}
+                    placeholder="Member Name"
+                    className="w-full px-4 py-2 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-white mb-2">Member Email</label>
+                  <input
+                    type="email"
+                    name="memberEmail"
+                    value={editMemberData.memberEmail}
+                    onChange={handleEditMemberData}
+                    placeholder="Member Email"
+                    className="w-full px-4 py-2 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-white mb-2">Member Role</label>
+                  <select
+                    name="memberRole"
+                    value={editMemberData.memberRole}
+                    onChange={handleEditMemberData}
+                    className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="member">Member</option>
+                  </select>
+                </div>
+                <div className="flex justify-end gap-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setEditMemberId(null)}
+                    className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {editTeamId && (
           <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="relative bg-gray-900 rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -1084,6 +1239,11 @@ const AdminPage = () => {
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
                   required
                 />
+                {editTeamData.leader.email && !users.some(user => user.email.toLowerCase() === editTeamData.leader.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
                 <input
                   type="text"
                   name="leader.codeforces"
@@ -1119,6 +1279,11 @@ const AdminPage = () => {
                   placeholder="Teammate 1 Codeforces ID"
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
                 />
+                {editTeamData.teammate1.email && !users.some(user => user.email.toLowerCase() === editTeamData.teammate1.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
                 <label className="text-white font-semibold">Teammate 2</label>
                 <input
                   type="text"
@@ -1138,6 +1303,11 @@ const AdminPage = () => {
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
                   required
                 />
+                {editTeamData.teammate2.email && !users.some(user => user.email.toLowerCase() === editTeamData.teammate2.email.toLowerCase()) && (
+                  <div className="text-red-400 text-sm mt-1 flex items-center gap-1">
+                    This email is not registered as a user
+                  </div>
+                )}
                 <input
                   type="text"
                   name="teammate2.codeforces"
@@ -1147,7 +1317,7 @@ const AdminPage = () => {
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
                 />
                 <select
-                  name="payment"
+                  name="payment.status"
                   value={editTeamData.payment.status}
                   onChange={handleEditTeamData}
                   className="w-full px-4 py-2 rounded-md bg-gray-800 text-white"
@@ -1158,17 +1328,18 @@ const AdminPage = () => {
                   <option value="rejected">rejected</option>
                 </select>
                 <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md mt-4">Save</button>
-             <button
-                type="button"
-                onClick={() => setEditTeamId(null)}
-                className="absolute  right-4 text-gray-400 hover:text-white text-xl font-bold"
-              >X</button>
+                <button
+                  type="button"
+                  onClick={() => setEditTeamId(null)}
+                  className="absolute  right-4 text-gray-400 hover:text-white text-xl font-bold"
+                >X</button>
               </form>
             </div>
           </div>
         )}
       </div>
     </div>
-  )};
+  )
+};
 
 export default AdminPage;
