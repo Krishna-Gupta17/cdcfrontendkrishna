@@ -200,7 +200,7 @@ const ProfileCard = () => {
                   <div className="flex items-center gap-2">
                     <label className="text-sm text-gray-300 mb-1">Roll Number</label>
                     <input
-                      className="mt-1 bg-white/10 px-3 py-1 rounded-md text-base font-medium max-w-fit outline-none"
+                      className="mt-1 bg-green-700 px-3 py-1 rounded-md text-base font-medium max-w-fit outline-none"
                       value={editableUser.rollno}
                       onChange={(e) => handleChange("rollno", e.target.value)}
                     />
@@ -230,7 +230,7 @@ const ProfileCard = () => {
               ) : (
                 <>
                   <h2 className="text-3xl font-bold">{user.username}</h2>
-                  <p className="mt-2 bg-white/10 px-3 py-1 rounded-md text-base font-medium max-w-fit">
+                  <p className="mt-2 bg-green-700 px-3 py-1 rounded-md text-base font-medium max-w-fit">
                     Roll No: {user.rollno}
                   </p>
                   <p className="mt-4 text-lg">{user.email}</p>
