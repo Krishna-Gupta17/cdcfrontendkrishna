@@ -312,8 +312,8 @@ const AdminPage = () => {
       const token = await currentUser.getIdToken(true);
 
       const res = await axios.post(
-        `http://localhost:4200/admin/members`,
-        // `${import.meta.env.VITE_SERVER_URL}/admin/members`,
+        // `http://localhost:4200/admin/members`,
+        `${import.meta.env.VITE_SERVER_URL}/admin/members`,
         newMember,
         {
           headers: {
