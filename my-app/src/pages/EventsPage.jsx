@@ -35,36 +35,23 @@ const EventsPage = () => {
     <div className="bg-transparent text-white font-inter min-h-screen pb-20 relative overflow-x-hidden">
       
       {/* Event Description */}
-      <div className="flex items-center justify-center mt-10 px-12">
+      <div className="flex items-center justify-center mt-10 px-4">
         <EventCard event={currentEvent} />
       </div>
 
-      <div className="relative cursor-pointer w-fit mx-auto mt-4 mb-16">
-        {/* 'REGISTER */}
+      {/* Register Button */}
+      <div className="relative w-fit mx-auto mt-8 mb-20">
         <a
           href="/register"
-
-          className="
-            relative z-10
-            bg-red-500 text-white font-bold text-xl
-            py-2 px-8 inline-block
-            rounded-lg
-          "
+          className="relative z-10 bg-red-500 text-white font-bold text-2xl py-4 px-12 inline-block rounded-lg"
         >
           REGISTER
         </a>
         <a
           href="/register"
-          className="
-            absolute top-full left-1/2 -translate-x-1/2 -mt-2
-            w-auto
-            bg-gray-400 text-black font-bold text-xl
-             px-6 py-1
-            flex items-center justify-center
-            rounded-lg
-            z-20
-            hover:bg-gray-500 transition-colors duration-300
-          "
+          className="absolute top-full left-1/2 -translate-x-1/2 -mt-2
+            bg-gray-400 text-black font-bold text-2xl py-2 px-8 rounded-lg
+            hover:bg-gray-500 transition-colors duration-300 z-20"
         >
           NOW
         </a>
@@ -73,8 +60,7 @@ const EventsPage = () => {
       {/* Timeline */}
       {filteredTimeline.length > 0 && (
         <>
-          {/* Title */}
-          <h2 className="text-5xl font-bold text-center mt-20 mb-16">
+          <h2 className="text-4xl font-bold text-center mt-12 mb-16">
             Winners Through the Years
           </h2>
 

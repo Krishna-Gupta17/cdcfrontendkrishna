@@ -69,5 +69,3 @@ const WinnerCard = ({ eventId, year }) => {
 };
 
 export default WinnerCard;
-
-
