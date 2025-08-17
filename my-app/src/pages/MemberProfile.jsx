@@ -88,6 +88,14 @@ const MemberProfile = () => {
   const handleCreateBlog = async (e) => {
     e.preventDefault();
     try {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      if (!currentUser) {
+        throw new Error('Not logged in.');
+      }
+
+      const token = await currentUser.getIdToken(true);
       const form = new FormData();
       form.append("title", blogData.title);
       form.append("description", blogData.description);
@@ -97,9 +105,13 @@ const MemberProfile = () => {
         form.append("image", blogData.images);
       }
 
-      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}`, form, {
+
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/${id}/blog`, form, {
+      // const res = await axios.post(`http://localhost:4200/members/${id}/blog`, form, {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
+          'Authorization': `Bearer ${token}`,
+
         }
       });
 
@@ -122,6 +134,7 @@ const MemberProfile = () => {
       alert("Failed to add blog. Please try again.");
     }
   };
+
 
   const handleBlogChange = (e) => {
     const { name, value, files } = e.target;
