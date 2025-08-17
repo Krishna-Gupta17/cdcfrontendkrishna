@@ -83,7 +83,7 @@ const Eventsection = () => {
   return (
     <section
       id="events"
-      className="w-full h-[65vh] flex flex-col items-center justify-center px-4 py-4"
+      className="w-full h-[65vh] flex flex-col items-center justify-center px-4 py-4 mt-24 mb-24"
     >
       <EventWheel
         events={eventData}

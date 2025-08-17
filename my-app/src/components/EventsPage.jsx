@@ -240,10 +240,10 @@ const EventsPages = () => {
     <div className="min-h-screen text-white">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20"></div>
+        <div className="absolute"></div>
         <div
           ref={headerRef}
-          className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center"
+          className="relative max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 text-center"
         >
           <div className="flex justify-center items-center mb-6">
             <Code2 className="floating-icon w-12 h-12 text-purple-400 mr-4" />
@@ -251,7 +251,7 @@ const EventsPages = () => {
               Our Events
             </h1>
           </div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Join our competitive programming events designed to challenge your coding skills,
             foster innovation, and connect you with like-minded programmers.
           </p>

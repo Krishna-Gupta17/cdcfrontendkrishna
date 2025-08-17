@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Eventregimage from "../assets/EventRegisteration/eventreg.png";
 import API from '../api';
-import {auth} from '../firebase'
+import { auth } from '../firebase'
 
 const initialMember = {
   name: '',
@@ -13,7 +13,7 @@ const initialMember = {
 
 export default function EventRegistrationPage() {
   const [formData, setFormData] = useState({
-    teamName: '',
+    name: '',
     leader: { ...initialMember },
     teammate1: { ...initialMember },
     teammate2: { ...initialMember },
@@ -32,20 +32,21 @@ export default function EventRegistrationPage() {
     }
   };
 
- const handleSubmit = async e => {
-  e.preventDefault();
-  try {const user = auth.currentUser;
-const token = await user.getIdToken();
-const res=await API.post('/api/register', formData, {
-  headers: { Authorization: `Bearer ${token}` }
-});
-  if (!res.data.success) throw new Error('Registration failed');
-    alert('Registration successful!');
-  } catch (err) {
-    console.error(err);
-    alert('Something went wrong.');
-  }
-};
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      const token = await user.getIdToken();
+      const res = await API.post('/api/register', formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.data.success) throw new Error('Registration failed');
+      alert('Registration successful!');
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong.');
+    }
+  };
 
   return (
     <div className="flex flex-col justify-between bg-gradient-to-br from-gray-900 to-black text-white min-h-screen">
@@ -54,9 +55,9 @@ const res=await API.post('/api/register', formData, {
           onSubmit={handleSubmit}
           className="max-w-5xl mx-auto flex flex-col gap-8 bg-black bg-opacity-40 p-8 rounded-xl shadow-xl backdrop-blur-lg"
         >
-          {/* --- Top section: Poster + Team Name Row --- */}
+
           <div className="flex flex-row justify-center items-center items-start gap-4 md:gap-10 flex-wrap md:flex-nowrap">
-            {/* Poster */}
+
             <div className="flex-shrink-0 flex justify-center">
               <img
                 src={Eventregimage}
@@ -65,16 +66,15 @@ const res=await API.post('/api/register', formData, {
               />
             </div>
 
-            {/* Right Side: Centered Register + Team Name */}
             <div className="flex-1 flex flex-col justify-center items-center gap-4 text-center ">
               <h2 className="text-2xl md:text-3xl font-bold">Register Here</h2>
               <div className="w-full max-w-md border border-gray-600 bg-black bg-opacity-30 p-6 rounded-xl shadow-md space-y-4">
-                <label htmlFor="teamName" className="block font-semibold text-left mb-1">Team Name</label>
+                <label htmlFor="name" className="block font-semibold text-left mb-1">Team Name</label>
                 <input
-                  id="teamName"
-                  name="teamName"
+                  id="name"
+                  name="name"
                   type="text"
-                  value={formData.teamName}
+                  value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your team name"
                   className="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
@@ -123,7 +123,7 @@ const MemberSection = ({ title, sectionKey, member, handleChange }) => (
 const Input = ({ label, name, type = 'text', value, onChange }) => (
   <div className="flex flex-col gap-1 w-full">
     <label htmlFor={name} className="text-sm font-medium">{label}</label>
-    <input
+    <input                    rows="3"
       id={name}
       name={name}
       type={type}

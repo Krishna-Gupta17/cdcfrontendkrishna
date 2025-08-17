@@ -1,8 +1,9 @@
 // EventWheel.jsx
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
-import eventDes from "../data/eventDes"; // ✅ Import your existing data
+import eventDes from "../data/eventDes";
 import EventDetails from "./EventDetails";
+import wheelcenter from "../assets/eventsection/wheelcenter.png";
 
 const EventWheel = () => {
   const carouselRef = useRef(null);
@@ -10,13 +11,13 @@ const EventWheel = () => {
   const labelRefs = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [rotation, setRotation] = useState(-90);
-  const [isDragging, setIsDragging] = useState(false);
-  const [lastY, setLastY] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const radius = 100;
+  const radius = 150;
   const centerX = 200;
   const centerY = 200;
 
+  // ✅ update wheel based on ANY rotation (infinite, no modulo)
   const updateCarouselPositions = useCallback(
     (rotationAngle) => {
       const totalItems = eventDes.length;
@@ -36,7 +37,8 @@ const EventWheel = () => {
         const labelX = centerX + labelRadius * Math.cos(radian);
         const labelY = centerY + labelRadius * Math.sin(radian);
 
-        const normalizedAngle = (angle + 360) % 360;
+        // Determine active item by closest to "top" (270°)
+        const normalizedAngle = ((angle % 360) + 360) % 360;
         const distanceFromTop = Math.min(
           Math.abs(normalizedAngle - 270),
           Math.abs(normalizedAngle - 270 + 360),
@@ -68,92 +70,67 @@ const EventWheel = () => {
     [currentIndex]
   );
 
-  const handleStart = useCallback((clientY) => {
-    setIsDragging(true);
-    setLastY(clientY);
-  }, []);
+  // ✅ move continuously to a new index (no modulo clamp)
+  const moveToIndex = useCallback(
+    (index) => {
+      const totalItems = eventDes.length;
+      const angleStep = 360 / totalItems;
 
-  const handleMove = useCallback(
-    (clientY) => {
-      if (!isDragging) return;
-      const deltaY = clientY - lastY;
-      const rotationSpeed = 0.5;
-      const newRotation = rotation + deltaY * rotationSpeed;
-      setRotation(newRotation);
-      setLastY(clientY);
-      updateCarouselPositions(newRotation);
+      // compute absolute target rotation (not wrapped)
+      const targetRotation = rotation - (index - currentIndex) * angleStep;
+
+      setIsAnimating(true);
+      gsap.to({}, {
+        duration: 0.6,
+        ease: "power2.out",
+        onUpdate: function () {
+          const progress = this.progress();
+          const currentRot =
+            rotation + (targetRotation - rotation) * progress;
+          updateCarouselPositions(currentRot);
+        },
+        onComplete: () => {
+          setRotation(targetRotation);
+          setCurrentIndex(((index % totalItems) + totalItems) % totalItems);
+          setIsAnimating(false);
+        },
+      });
     },
-    [isDragging, lastY, rotation, updateCarouselPositions]
+    [rotation, currentIndex, updateCarouselPositions]
   );
 
-  const handleEnd = useCallback(() => {
-    if (!isDragging) return;
-    setIsDragging(false);
+  // ✅ scroll handler (always infinite)
+  const handleWheel = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (isAnimating) return;
 
-    const totalItems = eventDes.length;
-    const angleStep = 360 / totalItems;
-    const normalizedRotation = ((rotation % 360) + 360) % 360;
-    const targetAngle = 270;
+      const totalItems = eventDes.length;
+      let newIndex = currentIndex;
 
-    let closestIndex = 0;
-    let minDistance = Infinity;
-    for (let i = 0; i < totalItems; i++) {
-      const eventAngle = (i * angleStep + normalizedRotation) % 360;
-      const distance = Math.min(
-        Math.abs(eventAngle - targetAngle),
-        Math.abs(eventAngle - targetAngle + 360),
-        Math.abs(eventAngle - targetAngle - 360)
-      );
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = i;
+      if (e.deltaY > 0) {
+        newIndex = currentIndex + 1; // move forward
+      } else if (e.deltaY < 0) {
+        newIndex = currentIndex - 1; // move backward
       }
-    }
 
-    const targetRotation = 270 - closestIndex * angleStep;
-    setRotation(targetRotation);
+      moveToIndex(newIndex);
+    },
+    [currentIndex, moveToIndex, isAnimating]
+  );
 
-    gsap.to({}, {
-      duration: 0.5,
-      ease: "power2.out",
-      onUpdate: function () {
-        const progress = this.progress();
-        const currentRot =
-          rotation + (targetRotation - rotation) * progress;
-        updateCarouselPositions(currentRot);
-      },
-      onComplete: () => {
-        setCurrentIndex(closestIndex);
-      },
-    });
-  }, [isDragging, rotation, updateCarouselPositions]);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    handleStart(e.clientY);
-  };
-  const handleTouchStart = (e) => {
-    e.preventDefault();
-    handleStart(e.touches[0].clientY);
-  };
-
+  // ✅ Attach scroll
   useEffect(() => {
-    const handleGlobalMouseMove = (e) => {
-      if (isDragging) handleMove(e.clientY);
-    };
-    const handleGlobalMouseUp = () => {
-      if (isDragging) handleEnd();
-    };
-    if (isDragging) {
-      document.addEventListener("mousemove", handleGlobalMouseMove);
-      document.addEventListener("mouseup", handleGlobalMouseUp);
-    }
-    return () => {
-      document.removeEventListener("mousemove", handleGlobalMouseMove);
-      document.removeEventListener("mouseup", handleGlobalMouseUp);
-    };
-  }, [isDragging, handleMove, handleEnd]);
+    const wheelContainer = carouselRef.current;
+    if (!wheelContainer) return;
 
+    wheelContainer.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      wheelContainer.removeEventListener("wheel", handleWheel);
+    };
+  }, [handleWheel]);
+
+  // ✅ Initial render
   useEffect(() => {
     updateCarouselPositions(rotation);
   }, [updateCarouselPositions, rotation]);
@@ -161,38 +138,23 @@ const EventWheel = () => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-12 px-6 text-white">
       {/* Wheel */}
-      <div className="relative w-[80vw] max-w-[400px] aspect-square flex-shrink-0">
+      <div className="relative w-[80vw] max-w-[400px] aspect-square flex-shrink-0 mt-28">
         <div
           ref={carouselRef}
-          className="relative w-full h-full cursor-grab active:cursor-grabbing select-none"
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          onTouchMove={(e) => {
-            e.preventDefault();
-            handleMove(e.touches[0].clientY);
-          }}
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            handleEnd();
-          }}
-          style={{ touchAction: "pan-y" }}
+          className="relative w-full h-full cursor-grab select-none"
+          style={{ touchAction: "none" }}
         >
           {/* Outer rings */}
-          <div className="absolute inset-8 border border-gray-600/20 rounded-full"></div>
-          <div className="absolute inset-12 border border-gray-700/10 rounded-full"></div>
+          <div className="absolute inset-12 border border-blue-800 rounded-full shadow-[0_0_40px_20px_rgba(101,104,255,0.53)]"></div>
 
           {/* Center display */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="text-center">
-              {/* <div className="text-2xl font-bold uppercase tracking-wider mb-2">
-                {eventDes[currentIndex].name}
-              </div> */}
               <img
-                src={eventDes[currentIndex].image}
+                src={wheelcenter}
                 alt={eventDes[currentIndex].name}
                 className="w-16 h-16 mx-auto"
               />
-              <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto mt-2"></div>
             </div>
           </div>
 

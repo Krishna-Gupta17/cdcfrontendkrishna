@@ -55,7 +55,7 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const firebaseToken = await result.user.getIdToken();
 
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/firebase-auth/register`, {
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/firebase-auth/login`, {
         firebaseToken,
         firstName: result.user.displayName?.split(" ")[0] || "",
         lastName: result.user.displayName?.split(" ")[1] || "",
@@ -75,7 +75,7 @@ const Login = () => {
       const result = await signInWithPopup(auth, githubProvider);
       const firebaseToken = await result.user.getIdToken();
 
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/firebase-auth/register`, {
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/firebase-auth/login`, {
         firebaseToken,
         firstName: result.user.displayName?.split(" ")[0] || "",
         lastName: result.user.displayName?.split(" ")[1] || "",

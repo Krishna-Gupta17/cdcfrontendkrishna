@@ -171,6 +171,7 @@ import {
   User,
   MessageSquare,
 } from "lucide-react";
+import contactpage from "../assets/contact/contactpage.png";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -229,15 +230,13 @@ const ContactUs = () => {
         <div className="space-y-8">
           <div>
             <h1 className="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-              Let's Build
+              Get in
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                {" "}Something
-              </span>
-              <br />Amazing Together
+                {" "}Touch
+              </span> With Us.
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed">
-              Ready to turn your ideas into powerful digital solutions? 
-              Get in touch and let's discuss your next project.
+              Have questions or need assistance? Feel free to reach out to us via the form below or connect with us on WhatsApp and Telegram for quick responses. We’re here to help!
             </p>
           </div>
 
@@ -245,9 +244,9 @@ const ContactUs = () => {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <img
-              src="https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800"
+              src={contactpage}
               alt="Developer coding"
-              className="relative w-full h-64 object-cover rounded-2xl border border-gray-700/50"
+              className="relative w-full h-56 object-cover rounded-2xl border border-gray-700/50"
             />
           </div>
 
