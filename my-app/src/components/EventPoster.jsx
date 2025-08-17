@@ -16,12 +16,10 @@ const EventPoster = ({ event }) => {
 
     if (!poster || !title || !glow || !particles) return;
 
-    // Initial setup
     gsap.set(title, { y: 20, opacity: 0 });
     gsap.set(['.event-detail'], { x: -30, opacity: 0 });
     gsap.set(['.floating-particle'], { scale: 0, rotation: 0 });
 
-    // Entrance animation
     const tl = gsap.timeline();
 
     tl.to(glow, {
@@ -53,7 +51,6 @@ const EventPoster = ({ event }) => {
         ease: "back.out(1.7)"
       }, 0.8);
 
-    // Continuous floating animation for particles
     gsap.to('.floating-particle', {
       y: -10,
       duration: 2,
@@ -63,13 +60,8 @@ const EventPoster = ({ event }) => {
       stagger: 0.3
     });
 
-    // Hover animations
     const handleMouseEnter = () => {
-      gsap.to(poster, {
-        scale: 1.05,
-        duration: 0.3,
-        ease: "power2.out"
-      });
+      gsap.to(poster, { scale: 1.05, duration: 0.3, ease: "power2.out" });
       gsap.to('.neon-text', {
         textShadow: '0 0 20px #8B5CF6, 0 0 40px #8B5CF6, 0 0 60px #8B5CF6',
         duration: 0.3
@@ -77,11 +69,7 @@ const EventPoster = ({ event }) => {
     };
 
     const handleMouseLeave = () => {
-      gsap.to(poster, {
-        scale: 1,
-        duration: 0.3,
-        ease: "power2.out"
-      });
+      gsap.to(poster, { scale: 1, duration: 0.3, ease: "power2.out" });
       gsap.to('.neon-text', {
         textShadow: '0 0 10px #8B5CF6, 0 0 20px #8B5CF6',
         duration: 0.3
@@ -100,7 +88,7 @@ const EventPoster = ({ event }) => {
   return (
     <div
       ref={posterRef}
-      className="relative w-full h-96 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20 rounded-2xl overflow-hidden border border-purple-500/30 cursor-pointer"
+      className="relative w-full bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20 rounded-2xl overflow-hidden border border-purple-500/30 cursor-pointer"
       style={{
         background: `
           radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
@@ -109,13 +97,10 @@ const EventPoster = ({ event }) => {
         `
       }}
     >
-      {/* Animated background glow */}
-      <div
-        ref={glowRef}
-        className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 opacity-50"
-      />
+      {/* Glow */}
+      <div ref={glowRef} className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 opacity-50" />
 
-      {/* Floating particles */}
+      {/* Particles */}
       <div ref={particlesRef} className="absolute inset-0">
         {[...Array(8)].map((_, i) => (
           <div
@@ -130,7 +115,7 @@ const EventPoster = ({ event }) => {
         ))}
       </div>
 
-      {/* Cyberpunk grid overlay */}
+      {/* Grid overlay */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
@@ -142,65 +127,72 @@ const EventPoster = ({ event }) => {
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 p-6 h-full flex flex-col justify-between">
-        {/* Header */}
-        <div className="text-center mb-4">
-          <div className="text-purple-300 text-sm font-medium mb-2 tracking-wider">
-            CODERS & DEVELOPERS CLUB PRESENTS
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center md:items-stretch h-full">
+        
+        {/* Left */}
+        <div className="p-6 md:w-1/2 flex flex-col justify-between">
+          <div className="text-center md:text-left mb-4">
+            <div className="text-purple-300 text-sm font-medium mb-2 tracking-wider">
+              CODERS & DEVELOPERS CLUB PRESENTS
+            </div>
+            <div
+              ref={titleRef}
+              className="neon-text text-3xl font-bold text-white mb-2"
+              style={{
+                textShadow: '0 0 10px #8B5CF6, 0 0 20px #8B5CF6',
+                fontFamily: 'monospace',
+                letterSpacing: '2px'
+              }}
+            >
+              {event.title.toUpperCase()}
+            </div>
+            <div className="text-purple-400 text-sm">{event.type}</div>
           </div>
-          <div
-            ref={titleRef}
-            className="neon-text text-3xl font-bold text-white mb-2"
-            style={{
-              textShadow: '0 0 10px #8B5CF6, 0 0 20px #8B5CF6',
-              fontFamily: 'monospace',
-              letterSpacing: '2px'
-            }}
-          >
-            {event.title.toUpperCase()}
+
+          <div className="space-y-3">
+            <div className="event-detail flex items-center text-white text-sm">
+              <Calendar className="w-4 h-4 mr-3 text-purple-400" />
+              <span>{event.date}</span>
+            </div>
+            <div className="event-detail flex items-center text-white text-sm">
+              <Clock className="w-4 h-4 mr-3 text-blue-400" />
+              <span>Duration: {event.duration}</span>
+            </div>
+            <div className="event-detail flex items-center text-white text-sm">
+              <MapPin className="w-4 h-4 mr-3 text-green-400" />
+              <span>Platform: {event.venue.online.platform}</span>
+            </div>
+            <div className="event-detail flex items-center text-white text-sm">
+              <Users className="w-4 h-4 mr-3 text-pink-400" />
+              <span>Team Size: {event.registration.teamSize}</span>
+            </div>
           </div>
-          <div className="text-purple-400 text-sm">
-            {event.type}
+
+          <div className="flex justify-between items-center mt-4">
+            <div className="flex space-x-2">
+              <Code2 className="w-5 h-5 text-purple-400 opacity-60" />
+              <div className="w-8 h-0.5 bg-gradient-to-r from-purple-400 to-transparent" />
+            </div>
+            <div className="text-xs text-purple-300 font-mono">@cdc.mmmut</div>
           </div>
         </div>
 
-        {/* Event Details */}
-        <div className="space-y-3">
-          <div className="event-detail flex items-center text-white text-sm">
-            <Calendar className="w-4 h-4 mr-3 text-purple-400" />
-            <span>{event.date}</span>
-          </div>
+        {/* Right: Image */}
+<div className="md:w-1/2 w-full flex items-center justify-center p-4">
+  <img
+    src={event.image}
+    alt={event.title}
+    className="w-full max-h-[60vh] rounded-xl shadow-lg object-contain"
+  />
+</div>
 
-          <div className="event-detail flex items-center text-white text-sm">
-            <Clock className="w-4 h-4 mr-3 text-blue-400" />
-            <span>Duration: {event.duration}</span>
-          </div>
 
-          <div className="event-detail flex items-center text-white text-sm">
-            <MapPin className="w-4 h-4 mr-3 text-green-400" />
-            <span>Platform: {event.venue.online.platform}</span>
-          </div>
 
-          <div className="event-detail flex items-center text-white text-sm">
-            <Users className="w-4 h-4 mr-3 text-pink-400" />
-            <span>Team Size: {event.registration.teamSize}</span>
-          </div>
-        </div>
 
-        {/* Bottom decoration */}
-        <div className="flex justify-between items-center mt-4">
-          <div className="flex space-x-2">
-            <Code2 className="w-5 h-5 text-purple-400 opacity-60" />
-            <div className="w-8 h-0.5 bg-gradient-to-r from-purple-400 to-transparent" />
-          </div>
-          <div className="text-xs text-purple-300 font-mono">
-            @cdc.mmmut
-          </div>
-        </div>
       </div>
 
-      {/* Corner accents */}
+      {/* Corners */}
       <div className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-purple-500/50" />
       <div className="absolute top-0 right-0 w-16 h-16 border-r-2 border-t-2 border-blue-500/50" />
       <div className="absolute bottom-0 left-0 w-16 h-16 border-l-2 border-b-2 border-green-500/50" />
