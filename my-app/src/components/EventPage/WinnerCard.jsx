@@ -9,7 +9,7 @@ const WinnerCard = ({ eventId, year }) => {
 
   const topThree = winners
     .sort((a, b) => parseInt(a.rank) - parseInt(b.rank))
-    .slice(0, 3); // Only ranks 1, 2, 3
+    .slice(0, 3);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -17,40 +17,49 @@ const WinnerCard = ({ eventId, year }) => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % topThree.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, [topThree]);
 
   const item = topThree[currentIndex];
-
   if (!item) return null;
 
   return (
-    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] rounded-2xl border border-violet-500 text-white px-6 py-10 w-full max-w-sm md:w-[450px] mx-auto shadow-lg transition-all m-5 duration-500 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-[0_0_30px_#7760CB] flex flex-col items-center``">
-      <h3 className="text-center text-xl font-semibold mb-2">{item.title}</h3>
+    <div className="bg-gradient-to-br from-[#4356B980] to-[#7760CB] 
+        rounded-2xl border border-violet-500 text-white 
+        px-6 py-10 w-full max-w-md md:max-w-lg 
+        mx-auto shadow-lg transition-all duration-300 
+        hover:scale-105 hover:shadow-[0_0_25px_#7760CB]
+        flex flex-col items-center">
+      
+      <h3 className="text-center text-2xl md:text-3xl font-semibold mb-4">
+        {item.title}
+      </h3>
+
       <img
         src={item.image}
-        alt="winner-photo"
-        className="w-auto h-32 sm:h-40 object-cover rounded-xl mb-2"
+        alt="winner"
+        className="w-full max-w-[250px] h-40 md:h-56 object-cover rounded-xl mb-4"
       />
-      <div className="text-center text-yellow-400 text-lg font-bold mb-2">
-        🥉 Rank {item.rank}
+
+      <div className="text-center text-yellow-400 text-xl font-bold mb-3">
+        🏆 Rank {item.rank}
       </div>
-      <ul className="space-y-2 text-left">
+
+      <ul className="space-y-2 text-left w-full px-4">
         {item.team.map((member, idx) => (
-          <li key={idx} className="flex items-center gap-1">
-            <span><img src={vector} className="w-4/5" /></span> {member}
+          <li key={idx} className="flex items-center gap-2">
+            <img src={vector} className="w-4 h-4" alt="bullet" />
+            <span>{member}</span>
           </li>
         ))}
       </ul>
 
-      {/* Dots for top three only */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-2 mt-6">
         {topThree.map((_, i) => (
           <span
             key={i}
-            className={`h-2 w-2 rounded-full ${
-              i === currentIndex ? "bg-white" : "bg-white/50"
+            className={`h-2 w-2 rounded-full transition-colors ${
+              i === currentIndex ? "bg-white" : "bg-white/40"
             }`}
           ></span>
         ))}
@@ -60,3 +69,5 @@ const WinnerCard = ({ eventId, year }) => {
 };
 
 export default WinnerCard;
+
+
