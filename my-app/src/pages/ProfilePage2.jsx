@@ -230,7 +230,7 @@ const ProfileCard = () => {
               ) : (
                 <>
                   <h2 className="text-3xl font-bold">{user.username}</h2>
-                  <p className="mt-2 bg-green-700 px-3 py-1 rounded-md text-base font-medium max-w-fit">
+                  <p className="mt-2 bg-green-100 px-3 py-1 rounded-md text-base text-green-600 font-medium max-w-fit">
                     Roll No: {user.rollno}
                   </p>
                   <p className="mt-4 text-lg">{user.email}</p>

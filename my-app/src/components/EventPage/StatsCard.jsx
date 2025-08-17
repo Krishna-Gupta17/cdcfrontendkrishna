@@ -4,7 +4,7 @@ import man from "../../assets/events/icon_1.png";
 
 const StatsCard = ({ stats }) => {
   return (
-    <div className="bg-gradient-to-br from-[#2A174E] to-[#311B63] rounded-2xl border border-violet-500 text-white px-6 py-10 w-full shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-[0_0_30px_#7760CB] ">
+    <div className="bg-gradient-to-br from-[#2A174E] to-[#311B63] rounded-2xl border border-violet-500 text-white px-6 py-10 w-[300px] h-[200px] shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-[0_0_30px_#7760CB] ">
       {/* Changes the layout from a row on small screens and up to a column on mobile */}
       <div className="flex flex-col sm:flex-row justify-around items-center gap-y-6 gap-x-10">
         {/* Students Attended Workshops */}
